@@ -47,7 +47,7 @@ export default async function GalleryPage() {
             </div>
           ) : (
             <div className="space-y-16">
-              {Object.entries(groupedGallery).map(([albumName, items]) => (
+              {Object.entries(groupedGallery).map(([albumName, items]: [string, any[]]) => (
                 <div key={albumName} className="bg-white rounded-3xl shadow-sm border border-primary/5 p-8 md:p-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
                     <div>

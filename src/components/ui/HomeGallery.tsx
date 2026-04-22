@@ -49,7 +49,7 @@ export async function HomeGallery() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {latestAlbums.map(([albumName, items]) => {
+          {latestAlbums.map(([albumName, items]: [string, any[]]) => {
             const coverImage = items[0]; // Albümün ilk fotoğrafını kapak yap
             
             return (
