@@ -168,5 +168,15 @@ export async function deleteGalleryItem(id: string) {
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/gallery')
   revalidatePath('/galeri')
+  revalidatePath('/')
+}
+
+export async function deleteAlbum(albumName: string) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('gallery').delete().eq('album_name', albumName)
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/gallery')
+  revalidatePath('/galeri')
+  revalidatePath('/')
 }
 

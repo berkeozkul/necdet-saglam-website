@@ -1,10 +1,20 @@
 import { createClient } from '@/utils/supabase/server'
-import { createGalleryItem, deleteGalleryItem } from '../actions'
+import { createGalleryItem, deleteGalleryItem, deleteAlbum } from '../actions'
 import Link from 'next/link'
 
 export default async function GalleryAdminPage() {
   const supabase = await createClient()
   const { data: galleryItems } = await supabase.from('gallery').select('*').order('created_at', { ascending: false })
+
+  // Fotoğrafları "album_name" değerine göre gruplama
+  const groupedGallery: Record<string, any[]> = galleryItems?.reduce((acc, item) => {
+    const album = item.album_name || 'Genel Vaka';
+    if (!acc[album]) {
+      acc[album] = [];
+    }
+    acc[album].push(item);
+    return acc;
+  }, {} as Record<string, any[]>) || {};
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -73,30 +83,53 @@ export default async function GalleryAdminPage() {
             </div>
             
             <div className="p-6">
-              {!galleryItems || galleryItems.length === 0 ? (
+              {Object.keys(groupedGallery).length === 0 ? (
                 <p className="text-center text-slate-500 py-8">Henüz galeriye fotoğraf eklenmemiş.</p>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {galleryItems.map((item) => (
-                    <div key={item.id} className="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-square bg-slate-100">
-                      <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                <div className="space-y-8">
+                  {Object.entries(groupedGallery).map(([albumName, items]) => (
+                    <div key={albumName} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
                       
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-3 text-center">
-                        <span className="text-[10px] font-bold text-white bg-secondary/80 px-2 py-1 rounded-full mb-1 w-full truncate">{item.album_name}</span>
-                        <span className="text-[10px] font-bold text-secondary bg-white px-2 py-1 rounded-full mb-2">{item.category}</span>
-                        <p className="text-white text-xs font-medium line-clamp-2 mb-3">{item.title}</p>
-                        
+                      {/* Albüm Başlığı ve Toplu Silme Butonu */}
+                      <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
+                        <div>
+                          <h3 className="text-lg font-bold text-primary">{albumName}</h3>
+                          <p className="text-sm text-slate-500">{items.length} Fotoğraf • {items[0].category}</p>
+                        </div>
                         <form action={async () => {
                           'use server'
-                          await deleteGalleryItem(item.id)
+                          await deleteAlbum(albumName)
                         }}>
-                          <button type="submit" className="text-white bg-red-500 hover:bg-red-600 p-2 rounded-lg transition-colors text-xs font-bold flex items-center">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                            Sil
+                          <button type="submit" className="text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-red-100">
+                            Tüm Albümü Sil
                           </button>
                         </form>
                       </div>
+
+                      {/* Albüm İçindeki Fotoğraflar */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {items.map((item) => (
+                          <div key={item.id} className="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-square bg-slate-100">
+                            <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                            
+                            {/* Hover Overlay */}
+                            <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 text-center">
+                              <p className="text-white text-xs font-medium line-clamp-2 mb-2">{item.title}</p>
+                              
+                              <form action={async () => {
+                                'use server'
+                                await deleteGalleryItem(item.id)
+                              }}>
+                                <button type="submit" className="text-white bg-red-500 hover:bg-red-600 p-1.5 rounded-md transition-colors text-xs font-bold flex items-center">
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                  Sil
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
                     </div>
                   ))}
                 </div>
