@@ -37,12 +37,13 @@ export default async function GalleryAdminPage() {
             </div>
             
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-slate-700 mb-1">Fotoğraf Seç</label>
+              <label htmlFor="images" className="block text-sm font-medium text-slate-700 mb-1">Fotoğrafları Seç (Birden fazla seçebilirsiniz)</label>
               <input 
                 type="file" 
-                id="image" 
-                name="image" 
+                id="images" 
+                name="images" 
                 accept="image/*" 
+                multiple
                 required 
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-secondary/10 file:text-secondary hover:file:bg-secondary/20 cursor-pointer" 
               />

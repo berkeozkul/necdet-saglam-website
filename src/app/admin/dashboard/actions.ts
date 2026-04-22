@@ -113,43 +113,50 @@ export async function deleteVideo(id: string) {
   revalidatePath('/')
 }
 
+// --- GALLERY ACTIONS ---
 export async function createGalleryItem(formData: FormData) {
   const supabase = await createClient()
   
-  const file = formData.get('image') as File
+  const files = formData.getAll('images') as File[]
   const title = formData.get('title') as string
   const category = formData.get('category') as string || 'Genel'
   const album_name = formData.get('album_name') as string || 'Genel Vaka'
 
-  if (!file || file.size === 0) {
-    throw new Error("Lütfen bir fotoğraf seçin.")
+  if (!files || files.length === 0 || files[0].size === 0) {
+    throw new Error("Lütfen en az bir fotoğraf seçin.")
   }
 
-  // Dosya adını benzersiz yapalım (Türkçe karakterleri ve boşlukları temizleyelim)
-  const fileExt = file.name.split('.').pop()
-  const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`
+  // Her bir dosya için yükleme ve veritabanı kayıt işlemi yap
+  for (const file of files) {
+    if (file.size === 0) continue;
 
-  // 1. Fotoğrafı Supabase Storage'a yükle
-  const { data: uploadData, error: uploadError } = await supabase.storage
-    .from('gallery')
-    .upload(fileName, file)
+    // Dosya adını benzersiz yapalım
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`
 
-  if (uploadError) throw new Error(uploadError.message)
+    // 1. Fotoğrafı Supabase Storage'a yükle
+    const { error: uploadError } = await supabase.storage
+      .from('gallery')
+      .upload(fileName, file)
 
-  // 2. Yüklenen fotoğrafın herkese açık linkini al
-  const { data: { publicUrl } } = supabase.storage
-    .from('gallery')
-    .getPublicUrl(fileName)
+    if (uploadError) throw new Error(uploadError.message)
 
-  // 3. Veritabanına kaydet
-  const { error } = await supabase.from('gallery').insert({
-    title,
-    image_url: publicUrl,
-    category,
-    album_name
-  })
+    // 2. Yüklenen fotoğrafın herkese açık linkini al
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery')
+      .getPublicUrl(fileName)
 
-  if (error) throw new Error(error.message)
+    // 3. Veritabanına kaydet
+    const { error } = await supabase.from('gallery').insert({
+      title,
+      image_url: publicUrl,
+      category,
+      album_name
+    })
+
+    if (error) throw new Error(error.message)
+  }
+
   revalidatePath('/admin/dashboard/gallery')
   revalidatePath('/galeri')
   revalidatePath('/')
