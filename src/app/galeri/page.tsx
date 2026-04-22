@@ -11,7 +11,7 @@ export default async function GalleryPage() {
   const { data: galleryItems } = await supabase.from('gallery').select('*').order('created_at', { ascending: false })
 
   // Fotoğrafları "album_name" değerine göre gruplama
-  const groupedGallery = galleryItems?.reduce((acc, item) => {
+  const groupedGallery: Record<string, any[]> = galleryItems?.reduce((acc, item) => {
     const album = item.album_name || 'Genel Vaka';
     if (!acc[album]) {
       acc[album] = [];
@@ -47,7 +47,7 @@ export default async function GalleryPage() {
             </div>
           ) : (
             <div className="space-y-16">
-              {Object.entries(groupedGallery).map(([albumName, items]: [string, any[]]) => (
+              {Object.entries(groupedGallery).map(([albumName, items]) => (
                 <div key={albumName} className="bg-white rounded-3xl shadow-sm border border-primary/5 p-8 md:p-10">
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
                     <div>

@@ -16,7 +16,7 @@ export async function HomeGallery() {
   }
 
   // Fotoğrafları albümlere göre grupla
-  const groupedGallery = galleryItems.reduce((acc, item) => {
+  const groupedGallery: Record<string, any[]> = galleryItems.reduce((acc, item) => {
     const album = item.album_name || 'Genel Vaka';
     if (!acc[album]) {
       acc[album] = [];
@@ -49,7 +49,7 @@ export async function HomeGallery() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {latestAlbums.map(([albumName, items]: [string, any[]]) => {
+          {latestAlbums.map(([albumName, items]) => {
             const coverImage = items[0]; // Albümün ilk fotoğrafını kapak yap
             
             return (
