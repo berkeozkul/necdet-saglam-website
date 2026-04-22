@@ -68,15 +68,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="bg-white rounded-3xl shadow-xl border border-primary/5 p-8 md:p-12">
             
             {/* Featured Image */}
-            {post.image_url && (
-              <div className="aspect-[21/9] rounded-2xl overflow-hidden mb-10 bg-slate-100">
-                <img 
-                  src={post.image_url} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+            <div className="aspect-[21/9] rounded-2xl overflow-hidden mb-10 bg-slate-100">
+              <img 
+                src={post.image_url || "/images/default-post.png"} 
+                alt={post.title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
 
             {/* Excerpt */}
             <div className="text-xl text-primary font-medium leading-relaxed mb-10 pb-10 border-b border-slate-100">
