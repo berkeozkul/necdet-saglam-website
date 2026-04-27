@@ -52,11 +52,14 @@ export default async function ContactPage() {
                     <MapPin className="w-6 h-6" />
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">{t("addressTitle")}</h3>
-                  <p className="text-foreground/70">
+                  <p className="text-foreground/70 mb-4">
                     Acıbadem {locale === 'tr' ? 'Hastanesi' : 'Hospital'}<br />
                     {locale === 'tr' ? 'Ortopedi ve Travmatoloji Kliniği' : 'Orthopedics and Traumatology Clinic'}<br />
                     {locale === 'tr' ? 'İstanbul, Türkiye' : 'Istanbul, Turkey'}
                   </p>
+                  <a href="https://maps.app.goo.gl/cvD4n4tN1zK9ucE27" target="_blank" rel="noopener noreferrer" className="text-secondary font-bold hover:text-primary transition-colors flex items-center text-sm">
+                    {locale === 'tr' ? 'Haritada Gör' : 'View on Map'}
+                  </a>
                 </div>
 
                 {/* Phone Card */}
@@ -203,12 +206,16 @@ export default async function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="h-96 bg-slate-200 relative">
-        <div className="absolute inset-0 flex items-center justify-center flex-col text-slate-500 bg-slate-100">
-          <MapPin className="w-12 h-12 mb-4 text-slate-400" />
-          <p className="font-medium text-lg">{locale === 'tr' ? 'Google Haritalar Görünümü' : 'Google Maps View'}</p>
-          <p className="text-sm">{locale === 'tr' ? 'Acıbadem Hastanesi Konumu' : 'Acıbadem Hospital Location'}</p>
-        </div>
+      <section className="h-[500px] w-full relative">
+        <iframe 
+          src="https://maps.google.com/maps?q=Ac%C4%B1badem%20Kartal%20Hastanesi&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+          width="100%" 
+          height="100%" 
+          style={{ border: 0 }} 
+          allowFullScreen 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
       </section>
     </div>
   );

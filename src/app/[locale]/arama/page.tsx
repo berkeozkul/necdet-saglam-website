@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { ArrowRight, Search, FileText, Activity } from 'lucide-react';
-import { services, getIconComponent } from '@/data/services';
+import { getIconComponent } from '@/data/services';
 
 export const metadata = {
   title: "Arama Sonuçları | Prof. Dr. Necdet Sağlam",
@@ -24,23 +24,26 @@ export default async function SearchPage({
     const supabase = await createClient();
     
     // Blog yazılarında arama (Başlık, Özet veya İçerikte geçiyorsa)
-    const { data } = await supabase
+    const { data: postsData } = await supabase
       .from('posts')
-      .select('id, slug, title, excerpt')
+      .select('id, slug, title, title_en, excerpt, excerpt_en')
       .eq('is_published', true)
-      .or(`title.ilike.%${decodedQuery}%,content.ilike.%${decodedQuery}%,excerpt.ilike.%${decodedQuery}%`)
+      .or(`title.ilike.%${decodedQuery}%,content.ilike.%${decodedQuery}%,excerpt.ilike.%${decodedQuery}%,title_en.ilike.%${decodedQuery}%,content_en.ilike.%${decodedQuery}%`)
       .order('created_at', { ascending: false });
       
-    if (data) {
-      posts = data;
+    if (postsData) {
+      posts = postsData;
     }
 
-    // Uzmanlık alanlarında arama (local veri)
-    matchedServices = services.filter(service => 
-      service.title.toLowerCase().includes(decodedQuery) || 
-      service.shortDesc.toLowerCase().includes(decodedQuery) ||
-      service.content.toLowerCase().includes(decodedQuery)
-    );
+    // Uzmanlık alanlarında arama (Veritabanından)
+    const { data: servicesData } = await supabase
+      .from('services')
+      .select('*')
+      .or(`title.ilike.%${decodedQuery}%,short_desc.ilike.%${decodedQuery}%,content.ilike.%${decodedQuery}%,title_en.ilike.%${decodedQuery}%,short_desc_en.ilike.%${decodedQuery}%,content_en.ilike.%${decodedQuery}%`);
+
+    if (servicesData) {
+      matchedServices = servicesData;
+    }
   }
 
   const hasResults = posts.length > 0 || matchedServices.length > 0;
@@ -99,8 +102,8 @@ export default async function SearchPage({
                   <div className="grid sm:grid-cols-2 gap-6">
                     {matchedServices.map((service) => (
                       <Link 
-                        key={service.id}
-                        href={`/uzmanliklar/${service.id}`}
+                        key={service.slug}
+                        href={`/uzmanliklar/${service.slug}`}
                         className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-secondary/50 hover:shadow-md transition-all group flex flex-col"
                       >
                         <div className="flex items-center mb-3">
@@ -112,7 +115,7 @@ export default async function SearchPage({
                           </h3>
                         </div>
                         <p className="text-sm text-foreground/70 mb-4 line-clamp-2 flex-grow">
-                          {service.shortDesc}
+                          {service.short_desc}
                         </p>
                         <div className="flex items-center text-secondary font-medium text-sm mt-auto">
                           Görüntüle

@@ -148,30 +148,6 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-accent text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary mb-6">
-            {c("ctaTitle")}
-          </h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-bold transition-all shadow-md text-lg"
-            >
-              {c("ctaButton")}
-            </a>
-            <Link
-              href="/iletisim"
-              className="inline-flex items-center justify-center bg-white border-2 border-primary/10 hover:border-primary/30 text-primary px-8 py-4 rounded-full font-bold transition-all text-lg"
-            >
-              {c("ctaContact")}
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

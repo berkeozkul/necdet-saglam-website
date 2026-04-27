@@ -1,18 +1,20 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { ArrowRight, CheckCircle2, Activity } from "lucide-react";
-import { services, getIconComponent } from "@/data/services";
+import { getIconComponent } from "@/data/services";
 import { InstagramFeed } from "@/components/ui/InstagramFeed";
 import { Testimonials } from "@/components/ui/Testimonials";
 import { RecentPosts } from "@/components/ui/RecentPosts";
 import { HomeGallery } from "@/components/ui/HomeGallery";
 import { HomeVideos } from "@/components/ui/HomeVideos";
 import { getTranslations, getLocale } from "next-intl/server";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
   const t = await getTranslations("Home");
   const c = await getTranslations("Common");
   const locale = await getLocale();
+  const supabase = await createClient();
 
   // Sadece anasayfada gösterilecek öne çıkan uzmanlıklar
   const featuredServiceIds = [
@@ -23,7 +25,12 @@ export default async function Home() {
     "ayak-ve-ayak-bilegi",
     "pediatrik-ortopedi"
   ];
-  const featuredServices = services.filter(s => featuredServiceIds.includes(s.id));
+  const { data: featuredServicesData } = await supabase
+    .from('services')
+    .select('slug, title, title_en, short_desc, short_desc_en, icon')
+    .in('slug', featuredServiceIds);
+
+  const featuredServices = featuredServicesData || [];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -113,18 +120,18 @@ export default async function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredServices.map((service) => (
               <Link 
-                key={service.id}
-                href={`/uzmanliklar/${service.id}` as any}
+                key={service.slug}
+                href={`/uzmanliklar/${service.slug}` as any}
                 className="group bg-accent rounded-2xl p-8 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-xl transform hover:-translate-y-1 flex flex-col h-full"
               >
                 <div className="bg-white text-secondary group-hover:text-primary group-hover:bg-white/90 w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-sm transition-colors">
                   {getIconComponent(service.icon, "w-8 h-8")}
                 </div>
                 <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-white text-primary transition-colors">
-                  {locale === 'tr' ? service.title : (service as any).title_en || service.title}
+                  {locale === 'tr' ? service.title : service.title_en || service.title}
                 </h3>
                 <p className="text-foreground/70 group-hover:text-white/80 transition-colors leading-relaxed mb-6 flex-grow">
-                  {locale === 'tr' ? service.shortDesc : (service as any).shortDesc_en || service.shortDesc}
+                  {locale === 'tr' ? service.short_desc : service.short_desc_en || service.short_desc}
                 </p>
                 <div className="flex items-center text-secondary group-hover:text-white font-medium mt-auto">
                   {c("readMore")}

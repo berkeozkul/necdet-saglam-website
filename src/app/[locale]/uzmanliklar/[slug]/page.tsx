@@ -1,27 +1,36 @@
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import { services, getIconComponent } from "@/data/services";
+import { getIconComponent } from "@/data/services";
 import { getLocale, getTranslations } from "next-intl/server";
+import { createClient } from "@/utils/supabase/server";
 
 // Generate static params for all service pages
-export function generateStaticParams() {
-  return services.map((service) => ({
-    slug: service.id,
+export async function generateStaticParams() {
+  const supabase = await createClient();
+  const { data: services } = await supabase.from('services').select('slug');
+  return (services || []).map((service) => ({
+    slug: service.slug,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const service = services.find((s) => s.id === resolvedParams.slug);
+  const supabase = await createClient();
+  const { data: service } = await supabase
+    .from('services')
+    .select('*')
+    .eq('slug', resolvedParams.slug)
+    .single();
+
   const locale = await getLocale();
   
   if (!service) {
     return { title: locale === 'tr' ? "Uzmanlık Alanı Bulunamadı" : "Service Not Found" };
   }
 
-  const title = locale === 'tr' ? service.title : (service as any).title_en || service.title;
-  const shortDesc = locale === 'tr' ? service.shortDesc : (service as any).shortDesc_en || service.shortDesc;
+  const title = locale === 'tr' ? service.title : service.title_en || service.title;
+  const shortDesc = locale === 'tr' ? service.short_desc : service.short_desc_en || service.short_desc;
 
   return {
     title: `${title} | Prof. Dr. Necdet Sağlam`,
@@ -31,7 +40,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const service = services.find((s) => s.id === resolvedParams.slug);
+  const supabase = await createClient();
+  
+  const { data: service } = await supabase
+    .from('services')
+    .select('*')
+    .eq('slug', resolvedParams.slug)
+    .single();
+
   const locale = await getLocale();
   const c = await getTranslations("Common");
 
@@ -39,12 +55,16 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  const title = locale === 'tr' ? service.title : (service as any).title_en || service.title;
-  const shortDesc = locale === 'tr' ? service.shortDesc : (service as any).shortDesc_en || service.shortDesc;
-  const content = locale === 'tr' ? service.content : (service as any).content_en || service.content;
+  const title = locale === 'tr' ? service.title : service.title_en || service.title;
+  const shortDesc = locale === 'tr' ? service.short_desc : service.short_desc_en || service.short_desc;
+  const content = locale === 'tr' ? service.content : service.content_en || service.content;
 
   // Get other services for the sidebar
-  const otherServices = services.filter((s) => s.id !== service.id);
+  const { data: otherServices } = await supabase
+    .from('services')
+    .select('slug, title, title_en, icon')
+    .neq('slug', resolvedParams.slug)
+    .limit(5);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -88,23 +108,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   className="prose prose-lg max-w-none text-foreground/80 prose-headings:font-heading prose-headings:text-primary prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4 prose-p:leading-relaxed prose-li:my-2 prose-ul:list-disc prose-ul:pl-5 prose-strong:text-primary"
                   dangerouslySetInnerHTML={{ __html: content }}
                 />
-
-                <div className="mt-12 p-8 bg-accent rounded-2xl border border-secondary/20">
-                  <h3 className="font-heading text-2xl font-bold text-primary mb-4">{locale === 'tr' ? 'Tedavi Planlaması İçin' : 'For Treatment Planning'}</h3>
-                  <p className="text-foreground/70 mb-6">
-                    {locale === 'tr' 
-                      ? `${title} konusunda yaşadığınız şikayetlerin detaylı değerlendirmesi ve size en uygun tedavi yönteminin belirlenmesi için kliniğimize başvurabilirsiniz.`
-                      : `You can apply to our clinic for a detailed evaluation of your complaints regarding ${title} and to determine the most appropriate treatment method for you.`}
-                  </p>
-                  <a
-                    href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-bold transition-all shadow-md"
-                  >
-                    {locale === 'tr' ? 'Hemen Randevu Alın' : 'Book an Appointment'}
-                  </a>
-                </div>
               </div>
             </div>
 
@@ -115,12 +118,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   {locale === 'tr' ? 'Diğer Uzmanlık Alanları' : 'Other Services'}
                 </h3>
                 <ul className="space-y-3">
-                  {otherServices.map((other) => {
-                    const otherTitle = locale === 'tr' ? other.title : (other as any).title_en || other.title;
+                  {(otherServices || []).map((other) => {
+                    const otherTitle = locale === 'tr' ? other.title : other.title_en || other.title;
                     return (
-                      <li key={other.id}>
+                      <li key={other.slug}>
                         <Link 
-                          href={`/uzmanliklar/${other.id}`}
+                          href={`/uzmanliklar/${other.slug}`}
                           className="flex items-center justify-between p-4 rounded-xl bg-white hover:bg-primary hover:text-white text-foreground/80 transition-all group shadow-sm"
                         >
                           <span className="font-medium flex items-center">
@@ -135,17 +138,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                     );
                   })}
                 </ul>
-
-                <div className="mt-8 pt-8 border-t border-primary/10">
-                  <h4 className="font-bold text-primary mb-2">{locale === 'tr' ? 'Sorularınız mı var?' : 'Do you have questions?'}</h4>
-                  <p className="text-sm text-foreground/70 mb-4">{locale === 'tr' ? 'Uzman ekibimiz size yardımcı olmaktan memnuniyet duyacaktır.' : 'Our expert team will be happy to assist you.'}</p>
-                  <Link 
-                    href="/iletisim"
-                    className="block w-full text-center bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-xl font-bold transition-colors"
-                  >
-                    {locale === 'tr' ? 'Bize Ulaşın' : 'Contact Us'}
-                  </Link>
-                </div>
               </div>
             </div>
 

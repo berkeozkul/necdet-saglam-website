@@ -101,11 +101,28 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start text-sm text-primary-foreground/70">
                 <MapPin className="w-5 h-5 mr-3 text-secondary shrink-0 mt-0.5" />
-                <span>
-                  Acıbadem {locale === 'tr' ? 'Kartal Hastanesi' : 'Kartal Hospital'}<br />
-                  {locale === 'tr' ? 'Ortopedi ve Travmatoloji Kliniği' : 'Orthopedics and Traumatology Clinic'}<br />
-                  {locale === 'tr' ? 'İstanbul, Türkiye' : 'Istanbul, Turkey'}
-                </span>
+                <div className="flex flex-col w-full pr-4">
+                  <span className="mb-2">
+                    Acıbadem {locale === 'tr' ? 'Kartal Hastanesi' : 'Kartal Hospital'}<br />
+                    {locale === 'tr' ? 'Ortopedi ve Travmatoloji Kliniği' : 'Orthopedics and Traumatology Clinic'}<br />
+                    {locale === 'tr' ? 'İstanbul, Türkiye' : 'Istanbul, Turkey'}
+                  </span>
+                  <a href="https://maps.app.goo.gl/cvD4n4tN1zK9ucE27" target="_blank" rel="noopener noreferrer" className="text-secondary font-medium hover:text-white transition-colors flex items-center w-fit mb-4">
+                    {locale === 'tr' ? 'Haritada Gör' : 'View on Map'}
+                    <ArrowRight className="w-3 h-3 ml-1" />
+                  </a>
+                  <div className="w-full h-40 rounded-xl overflow-hidden shadow-inner">
+                    <iframe 
+                      src="https://maps.google.com/maps?q=Ac%C4%B1badem%20Kartal%20Hastanesi&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      allowFullScreen 
+                      loading="lazy" 
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                </div>
               </li>
               <li className="flex items-center text-sm text-primary-foreground/70">
                 <Mail className="w-5 h-5 mr-3 text-secondary shrink-0" />
