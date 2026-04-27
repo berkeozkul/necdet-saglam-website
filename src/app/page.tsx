@@ -21,11 +21,11 @@ export default function Home() {
                 Ortopedi ve Travmatoloji Uzmanı
               </div>
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary leading-tight">
-                Ağrısız, Sağlıklı ve <br />
-                <span className="text-secondary italic">Özgürce Hareket Edin</span>
+                Ağrısız, Dengeli, Bağımsız ve <br />
+                <span className="text-secondary italic">Özgür Hareket İçin Ortopedik Yaklaşım</span>
               </h1>
               <p className="text-lg text-foreground/80 max-w-xl leading-relaxed">
-                Diz ve kalça protezi, spor yaralanmaları, artroskopik cerrahi ve travma cerrahisi alanlarında uzman dokunuş. Yılların tecrübesiyle sağlığınıza kavuşun.
+              Diz ve kalça protezi, spor yaralanmaları ve Artrospik cerrahi, travma cerrahisi ve Omurga cerrahisi konularında spesifik, 30 yılı aşkın genel ortopedi tecrübesi.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <a
@@ -34,7 +34,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg"
                 >
-                  Acıbadem'den Randevu Al
+                  Randevu Al
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
                 <a
@@ -48,11 +48,23 @@ export default function Home() {
               <div className="pt-8 flex items-center gap-6 text-sm font-medium text-foreground/70">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-secondary" />
-                  <span>25+ Yıl Tecrübe</span>
+                  <span>30+ Yıl Tecrübe</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-secondary" />
-                  <span>Modern Cerrahi</span>
+                  <span>Omurga Cerrahisi</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-secondary" />
+                  <span>Diz ve Kalça Protez Cerrahisi</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-secondary" />
+                  <span>Boy Uzatma Cerrahisi</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-secondary" />
+                  <span>Kırık ve Kaynamama Cerrahisi</span>
                 </div>
               </div>
             </div>
@@ -209,27 +221,7 @@ export default function Home() {
 
       {/* Home Videos Section */}
       <HomeVideos />
-
-      {/* CTA Section */}
-      <section className="py-24 bg-white text-center">
-        <div className="container mx-auto px-4 md:px-6">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary mb-6">
-            Sağlıklı Adımlar İçin İlk Adımı Atın
-          </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto mb-10">
-            Ağrılarınızla yaşamayı kabullenmeyin. Modern tedavi yöntemleriyle sağlığınıza kavuşmak için randevunuzu hemen oluşturun.
-          </p>
-          <a
-            href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-secondary hover:bg-secondary/90 text-white px-10 py-5 rounded-full font-bold transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
-          >
-            Acıbadem Hastanesi'nden Randevu Al
-            <ArrowRight className="ml-3 h-6 w-6" />
-          </a>
-        </div>
-      </section>
+      
     </div>
   );
 }
