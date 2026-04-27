@@ -9,6 +9,18 @@ import { HomeGallery } from "@/components/ui/HomeGallery";
 import { HomeVideos } from "@/components/ui/HomeVideos";
 
 export default function Home() {
+  // Sadece anasayfada gösterilecek öne çıkan uzmanlıklar
+  const featuredServiceIds = [
+    "omurga-cerrahisi",
+    "diz-ve-kalca-protezi",
+    "spor-yaralanmalari",
+    "travma-cerrahisi",
+    "omuz-ve-dirsek",
+    "ayak-ve-ayak-bilegi",
+    "pediatrik-ortopedi"
+  ];
+  const featuredServices = services.filter(s => featuredServiceIds.includes(s.id));
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -107,7 +119,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
+            {featuredServices.map((service) => (
               <Link 
                 key={service.id}
                 href={`/uzmanliklar/${service.id}`}
@@ -221,7 +233,7 @@ export default function Home() {
 
       {/* Home Videos Section */}
       <HomeVideos />
-      
+
     </div>
   );
 }
