@@ -23,6 +23,19 @@ export default async function AboutPage() {
 
   const biographyContent = locale === 'tr' ? setting?.content : setting?.content_en || setting?.content;
 
+  const timelineData = [
+    { year: "2025", titleTr: "Acıbadem Sağlık Grubu", titleEn: "Acıbadem Healthcare Group", descTr: "Ortopedi ve Travmatoloji Uzmanı", descEn: "Orthopedics and Traumatology Specialist", current: true },
+    { year: "2024 – 2025", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Profesör", descEn: "Professor" },
+    { year: "2024", titleTr: "Başakşehir Çam ve Sakura Şehir Hastanesi", titleEn: "Basaksehir Cam and Sakura City Hospital", descTr: "Profesör", descEn: "Professor" },
+    { year: "2017 – 2024", titleTr: "SBÜ Ümraniye Eğitim ve Araştırma Merkezi", titleEn: "SBU Umraniye Training and Research Center", descTr: "Başhekim", descEn: "Chief Physician" },
+    { year: "2014 – 2017", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Doçent Doktor", descEn: "Associate Professor" },
+    { year: "2011 – 2014", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Başasistan", descEn: "Chief Assistant" },
+    { year: "2006 – 2010", titleTr: "Medipol Üniversitesi", titleEn: "Medipol University", descTr: "Yardımcı Doçent", descEn: "Assistant Professor" },
+    { year: "2005 – 2006", titleTr: "Acıbadem International Hastanesi", titleEn: "Acibadem International Hospital", descTr: "Uzman Doktor", descEn: "Specialist Doctor" },
+    { year: "2003 – 2005", titleTr: "Haydarpaşa Numune Eğitim ve Araştırma Hastanesi", titleEn: "Haydarpasa Numune Training and Research Hospital", descTr: "Başasistan", descEn: "Chief Assistant" },
+    { year: "2002 – 2003", titleTr: "T.S.K. Elazığ Asker Hastanesi", titleEn: "Turkish Armed Forces Elazig Military Hospital", descTr: "Tabip Asteğmen", descEn: "Medical Lieutenant" }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
@@ -71,7 +84,7 @@ export default async function AboutPage() {
                     <Award className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium text-primary">{locale === 'tr' ? 'Deneyim' : 'Experience'}</p>
-                      <p className="text-sm text-foreground/70">25+ {locale === 'tr' ? 'Yıl' : 'Years'}</p>
+                      <p className="text-sm text-foreground/70">30+ {locale === 'tr' ? 'Yıl' : 'Years'}</p>
                     </div>
                   </li>
                 </ul>
@@ -92,14 +105,33 @@ export default async function AboutPage() {
                 ) : (
                   <>
                     <p>
-                      Tıp eğitimimi başarıyla tamamladıktan sonra Ortopedi ve Travmatoloji alanında uzmanlık eğitimimi aldım. Meslek hayatım boyunca hastalarımın yaşam kalitesini artırmak ve onlara ağrısız, özgürce hareket edebilecekleri bir yaşam sunmak en büyük motivasyonum oldu.
+                      {locale === 'tr' 
+                        ? 'Prof. Dr. Necdet Sağlam, ortopedi ve travmatoloji alanında 30 yılı aşkın deneyime sahip olup, özellikle kalça ve diz protez cerrahisi, travma cerrahisi ve omurga cerrahisi üzerine çalışmalar yürütmektedir. Akademik yaşamı boyunca hem eğitim hem de sağlık hizmetlerinde yenilikçi uygulamalara öncülük etmiştir.'
+                        : 'Prof. Dr. Necdet Sağlam has over 30 years of experience in the field of orthopedics and traumatology, focusing especially on hip and knee replacement surgery, trauma surgery, and spinal surgery. Throughout his academic life, he has pioneered innovative practices in both education and healthcare services.'}
                     </p>
-                    <p>
-                      Özellikle <strong>diz ve kalça protez cerrahisi</strong>, <strong>spor yaralanmaları</strong> ve <strong>artroskopik cerrahi</strong> alanlarında yoğunlaşarak, ulusal ve uluslararası alanda birçok bilimsel çalışmaya imza attım. Teknolojinin tıbba sunduğu en güncel yenilikleri yakından takip ediyor ve cerrahi pratiğimde uyguluyorum.
-                    </p>
-                    <p>
-                      Akademik kariyerim boyunca edindiğim "Profesör" unvanı, sadece bir akademik derece değil, aynı zamanda hastalarıma karşı taşıdığım sorumluluğun ve bilime olan bağlılığımın bir göstergesidir.
-                    </p>
+
+                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Eğitim' : 'Education'}</h3>
+                    <ul className="list-none space-y-2 pl-0">
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>2000</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi Ortopedi ve Travmatoloji</span></li>
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>1995</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi</span></li>
+                    </ul>
+
+                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Üyelikler' : 'Memberships'}</h3>
+                    <ul className="list-none space-y-2 pl-0">
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTDER</strong> — Türk Ortopedi ve Travmatoloji Derneği (Yönetim Kurulu Üyesi)</span></li>
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTEK</strong> — Türk Ortopedi ve Travmatoloji Eğitim Konseyi</span></li>
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOD</strong> — Türk Omurga Derneği</span></li>
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kalça Diz Artroplasti Derneği</span></li>
+                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTBİD</strong> — Türk Ortopedi ve Travmatoloji Birliği Derneği</span></li>
+                    </ul>
+
+                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Öne Çıkan Bilimsel Yayınlar' : 'Featured Scientific Publications'}</h3>
+                    <ul className="list-none space-y-3 pl-0 text-sm">
+                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Mid-term survivorship and clinical results of cementless total hip arthroplasty for steroid-induced avascular necrosis (North Clin Istanb. 2024)</span></li>
+                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Is step-cut shortening osteotomy a better choice than transverse osteotomy for total hip arthroplasty for Crowe type III-IV hip dysplasia? (Orthop Traumatol Surg Res. 2024)</span></li>
+                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kyphectomy and sliding growing rod technique in patients with congenital lumbar kyphosis deformity (J Orthop Surg Res. 2024)</span></li>
+                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Radiographic and clinical outcomes of distal tibia fractures: Comparison of two intramedullary nailing (Ulus Travma Acil Cerrahi Derg. 2022)</span></li>
+                    </ul>
                   </>
                 )}
               </div>
@@ -112,33 +144,26 @@ export default async function AboutPage() {
                 </h3>
                 <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-secondary/30 before:to-transparent">
                   
-                  {/* Timeline Item 1 */}
-                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-secondary text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                      <CheckCircle2 className="w-4 h-4" />
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-primary/5 group-hover:border-secondary/30 transition-colors">
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-bold text-primary text-lg">{locale === 'tr' ? 'Acıbadem Hastanesi' : 'Acıbadem Hospital'}</h4>
-                        <span className="text-sm font-medium text-secondary bg-secondary/10 px-3 py-1 rounded-full">{locale === 'tr' ? 'Günümüz' : 'Present'}</span>
+                  {timelineData.map((item, index) => (
+                    <div key={index} className={`relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group ${item.current ? 'is-active' : ''}`}>
+                      <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 ${item.current ? 'bg-secondary text-white' : 'bg-primary/20 text-primary'}`}>
+                        {item.current ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        )}
                       </div>
-                      <p className="text-foreground/70">{locale === 'tr' ? 'Ortopedi ve Travmatoloji Uzmanı' : 'Orthopedics and Traumatology Specialist'}</p>
-                    </div>
-                  </div>
-
-                  {/* Timeline Item 2 */}
-                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-primary/20 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-primary/5 group-hover:border-secondary/30 transition-colors">
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-bold text-primary text-lg">{locale === 'tr' ? 'Profesörlük Ünvanı' : 'Professorship Title'}</h4>
-                        <span className="text-sm font-medium text-foreground/50">{locale === 'tr' ? 'Geçmiş' : 'Past'}</span>
+                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-primary/5 group-hover:border-secondary/30 transition-colors">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-1 gap-2">
+                          <h4 className="font-bold text-primary text-lg">{locale === 'tr' ? item.titleTr : item.titleEn}</h4>
+                          <span className={`text-sm font-medium whitespace-nowrap ${item.current ? 'text-secondary bg-secondary/10 px-3 py-1 rounded-full' : 'text-foreground/50'}`}>
+                            {item.year}
+                          </span>
+                        </div>
+                        <p className="text-foreground/70">{locale === 'tr' ? item.descTr : item.descEn}</p>
                       </div>
-                      <p className="text-foreground/70">{locale === 'tr' ? 'Akademik kariyerde Profesörlük derecesinin alınması ve üniversite öğretim üyeliği.' : 'Receiving the title of Professor in academic career and university faculty membership.'}</p>
                     </div>
-                  </div>
+                  ))}
 
                 </div>
               </div>
