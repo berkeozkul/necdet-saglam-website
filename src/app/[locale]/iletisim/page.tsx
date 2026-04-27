@@ -1,21 +1,28 @@
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
+import { getTranslations, getLocale } from "next-intl/server";
 
-export const metadata = {
-  title: "İletişim | Prof. Dr. Necdet Sağlam",
-  description: "Prof. Dr. Necdet Sağlam iletişim bilgileri, adres, telefon ve randevu alma ekranı.",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("Contact");
+  return {
+    title: `${t("title")} | Prof. Dr. Necdet Sağlam`,
+    description: t("desc"),
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getTranslations("Contact");
+  const locale = await getLocale();
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
       <section className="bg-primary py-20 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">İletişim</h1>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">{t("title")}</h1>
           <div className="w-20 h-1 bg-secondary mx-auto rounded-full mb-6"></div>
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            Sağlığınızla ilgili sorularınız ve randevu talepleriniz için bize ulaşın.
+            {t("desc")}
           </p>
         </div>
       </section>
@@ -28,9 +35,13 @@ export default function ContactPage() {
             {/* Left Side - Contact Info */}
             <div className="space-y-10">
               <div>
-                <h2 className="font-heading text-3xl font-bold text-primary mb-6">Bize Ulaşın</h2>
+                <h2 className="font-heading text-3xl font-bold text-primary mb-6">
+                  {locale === 'tr' ? 'Bize Ulaşın' : 'Contact Us'}
+                </h2>
                 <p className="text-foreground/70 text-lg mb-8">
-                  Acıbadem Hastanesi bünyesinde hizmet vermekteyiz. Muayene ve randevu işlemleri için aşağıdaki iletişim kanallarını kullanabilirsiniz.
+                  {locale === 'tr' 
+                    ? 'Acıbadem Hastanesi bünyesinde hizmet vermekteyiz. Muayene ve randevu işlemleri için aşağıdaki iletişim kanallarını kullanabilirsiniz.'
+                    : 'We provide services within Acıbadem Hospital. You can use the communication channels below for examination and appointment procedures.'}
                 </p>
               </div>
 
@@ -40,11 +51,11 @@ export default function ContactPage() {
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
                     <MapPin className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">Adres</h3>
+                  <h3 className="font-bold text-primary text-lg mb-2">{t("addressTitle")}</h3>
                   <p className="text-foreground/70">
-                    Acıbadem Hastanesi<br />
-                    Ortopedi ve Travmatoloji Kliniği<br />
-                    İstanbul, Türkiye
+                    Acıbadem {locale === 'tr' ? 'Hastanesi' : 'Hospital'}<br />
+                    {locale === 'tr' ? 'Ortopedi ve Travmatoloji Kliniği' : 'Orthopedics and Traumatology Clinic'}<br />
+                    {locale === 'tr' ? 'İstanbul, Türkiye' : 'Istanbul, Turkey'}
                   </p>
                 </div>
 
@@ -53,8 +64,8 @@ export default function ContactPage() {
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
                     <Phone className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">Telefon</h3>
-                  <p className="text-foreground/70 mb-2">Randevu ve Bilgi için:</p>
+                  <h3 className="font-bold text-primary text-lg mb-2">{t("phoneTitle")}</h3>
+                  <p className="text-foreground/70 mb-2">{locale === 'tr' ? 'Randevu ve Bilgi için:' : 'For Appointment and Info:'}</p>
                 </div>
 
                 {/* Email Card */}
@@ -62,8 +73,8 @@ export default function ContactPage() {
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
                     <Mail className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">E-Posta</h3>
-                  <p className="text-foreground/70 mb-2">Sorularınız için:</p>
+                  <h3 className="font-bold text-primary text-lg mb-2">{t("emailTitle")}</h3>
+                  <p className="text-foreground/70 mb-2">{locale === 'tr' ? 'Sorularınız için:' : 'For your questions:'}</p>
                   <a href="mailto:info@necdetsaglam.com" className="text-secondary font-bold hover:text-primary transition-colors">
                     info@necdetsaglam.com
                   </a>
@@ -74,11 +85,10 @@ export default function ContactPage() {
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
                     <Clock className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">Çalışma Saatleri</h3>
-                  <p className="text-foreground/70">
-                    Pazartesi - Cuma: 09:00 - 18:00<br />
-                    Cumartesi: 09:00 - 13:00<br />
-                    Pazar: Kapalı
+                  <h3 className="font-bold text-primary text-lg mb-2">{t("workingHoursTitle")}</h3>
+                  <p className="text-foreground/70 whitespace-pre-line">
+                    {t("workingHours")}<br/>
+                    {locale === 'tr' ? 'Pazar: Kapalı' : 'Sun: Closed'}
                   </p>
                 </div>
               </div>
@@ -86,9 +96,11 @@ export default function ContactPage() {
               {/* Acıbadem Redirect Banner */}
               <div className="bg-primary text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-secondary rounded-full blur-3xl opacity-50 -z-10"></div>
-                <h3 className="font-heading text-2xl font-bold mb-4">Hızlı Randevu</h3>
+                <h3 className="font-heading text-2xl font-bold mb-4">{locale === 'tr' ? 'Hızlı Randevu' : 'Quick Appointment'}</h3>
                 <p className="text-white/80 mb-6">
-                  Acıbadem Hastanesi resmi web sitesi üzerinden doğrudan randevunuzu oluşturabilirsiniz.
+                  {locale === 'tr' 
+                    ? 'Acıbadem Hastanesi resmi web sitesi üzerinden doğrudan randevunuzu oluşturabilirsiniz.'
+                    : 'You can directly create your appointment through the Acıbadem Hospital official website.'}
                 </p>
                 <a
                   href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
@@ -96,42 +108,44 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center bg-secondary hover:bg-white hover:text-primary text-white px-6 py-3 rounded-full font-bold transition-all w-full sm:w-auto text-center"
                 >
-                  Randevu Al
+                  {locale === 'tr' ? 'Randevu Al' : 'Book Appointment'}
                 </a>
               </div>
             </div>
 
             {/* Right Side - Contact Form */}
             <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-primary/5 h-fit">
-              <h2 className="font-heading text-2xl font-bold text-primary mb-2">Mesaj Gönderin</h2>
+              <h2 className="font-heading text-2xl font-bold text-primary mb-2">{t("formTitle")}</h2>
               <p className="text-foreground/60 mb-8">
-                Formu doldurarak bize mesajınızı iletebilirsiniz. En kısa sürede size dönüş yapılacaktır.
+                {locale === 'tr' 
+                  ? 'Formu doldurarak bize mesajınızı iletebilirsiniz. En kısa sürede size dönüş yapılacaktır.'
+                  : 'You can send us your message by filling out the form. We will get back to you as soon as possible.'}
               </p>
 
               <form className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="firstName" className="text-sm font-medium text-primary">Adınız</label>
+                    <label htmlFor="firstName" className="text-sm font-medium text-primary">{locale === 'tr' ? 'Adınız' : 'First Name'}</label>
                     <input 
                       type="text" 
                       id="firstName" 
                       className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none"
-                      placeholder="Örn: Ahmet"
+                      placeholder={locale === 'tr' ? 'Örn: Ahmet' : 'Ex: John'}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="lastName" className="text-sm font-medium text-primary">Soyadınız</label>
+                    <label htmlFor="lastName" className="text-sm font-medium text-primary">{locale === 'tr' ? 'Soyadınız' : 'Last Name'}</label>
                     <input 
                       type="text" 
                       id="lastName" 
                       className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none"
-                      placeholder="Örn: Yılmaz"
+                      placeholder={locale === 'tr' ? 'Örn: Yılmaz' : 'Ex: Doe'}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-medium text-primary">Telefon Numaranız</label>
+                  <label htmlFor="phone" className="text-sm font-medium text-primary">{t("formPhone")}</label>
                   <input 
                     type="tel" 
                     id="phone" 
@@ -141,25 +155,25 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium text-primary">Konu</label>
+                  <label htmlFor="subject" className="text-sm font-medium text-primary">{t("formSubject")}</label>
                   <select 
                     id="subject" 
                     className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none appearance-none"
                   >
-                    <option value="">Seçiniz...</option>
-                    <option value="randevu">Randevu Talebi</option>
-                    <option value="bilgi">Bilgi Alma</option>
-                    <option value="diger">Diğer</option>
+                    <option value="">{locale === 'tr' ? 'Seçiniz...' : 'Select...'}</option>
+                    <option value="randevu">{locale === 'tr' ? 'Randevu Talebi' : 'Appointment Request'}</option>
+                    <option value="bilgi">{locale === 'tr' ? 'Bilgi Alma' : 'Information'}</option>
+                    <option value="diger">{locale === 'tr' ? 'Diğer' : 'Other'}</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-primary">Mesajınız</label>
+                  <label htmlFor="message" className="text-sm font-medium text-primary">{t("formMessage")}</label>
                   <textarea 
                     id="message" 
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none resize-none"
-                    placeholder="Size nasıl yardımcı olabiliriz?"
+                    placeholder={locale === 'tr' ? 'Size nasıl yardımcı olabiliriz?' : 'How can we help you?'}
                   ></textarea>
                 </div>
 
@@ -170,7 +184,7 @@ export default function ContactPage() {
                     className="mt-1 w-4 h-4 text-secondary bg-accent border-gray-300 rounded focus:ring-secondary"
                   />
                   <label htmlFor="kvkk" className="text-xs text-foreground/60 leading-relaxed">
-                    <a href="/kvkk" className="text-secondary hover:underline">KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum. Kişisel verilerimin işlenmesine onay veriyorum.
+                    {t("formTerms")}
                   </label>
                 </div>
 
@@ -178,7 +192,7 @@ export default function ContactPage() {
                   type="button" 
                   className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center group"
                 >
-                  Mesajı Gönder
+                  {t("formSubmit")}
                   <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </form>
@@ -190,11 +204,10 @@ export default function ContactPage() {
 
       {/* Map Section */}
       <section className="h-96 bg-slate-200 relative">
-        {/* Placeholder for Google Maps iframe */}
         <div className="absolute inset-0 flex items-center justify-center flex-col text-slate-500 bg-slate-100">
           <MapPin className="w-12 h-12 mb-4 text-slate-400" />
-          <p className="font-medium text-lg">Google Haritalar Görünümü</p>
-          <p className="text-sm">Acıbadem Hastanesi Konumu</p>
+          <p className="font-medium text-lg">{locale === 'tr' ? 'Google Haritalar Görünümü' : 'Google Maps View'}</p>
+          <p className="text-sm">{locale === 'tr' ? 'Acıbadem Hastanesi Konumu' : 'Acıbadem Hospital Location'}</p>
         </div>
       </section>
     </div>

@@ -1,23 +1,38 @@
 import { GraduationCap, Award, Briefcase, BookOpen, CheckCircle2 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { getLocale, getTranslations } from "next-intl/server";
+import { createClient } from "@/utils/supabase/server";
 
-export const metadata = {
-  title: "Hakkımda | Prof. Dr. Necdet Sağlam",
-  description: "Prof. Dr. Necdet Sağlam'ın eğitim geçmişi, akademik kariyeri ve tıbbi uzmanlık alanları hakkında detaylı bilgi.",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("Navigation");
+  return {
+    title: `${t("about")} | Prof. Dr. Necdet Sağlam`,
+    description: "Prof. Dr. Necdet Sağlam'ın eğitim geçmişi, akademik kariyeri ve tıbbi uzmanlık alanları hakkında detaylı bilgi.",
+  };
+}
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const locale = await getLocale();
+  const t = await getTranslations("About");
+  const c = await getTranslations("Home");
+  const nav = await getTranslations("Navigation");
+
+  const supabase = await createClient();
+  const { data: setting } = await supabase.from('settings').select('*').eq('id', 'about_me').single();
+
+  const biographyContent = locale === 'tr' ? setting?.content : setting?.content_en || setting?.content;
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
       <section className="bg-primary py-20 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">Hakkımda</h1>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">{t("title")}</h1>
           <div className="w-20 h-1 bg-secondary mx-auto rounded-full mb-6"></div>
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            Ortopedi ve Travmatoloji alanında 25 yılı aşkın tecrübe, akademik birikim ve binlerce başarılı operasyon.
+            {t("desc")}
           </p>
         </div>
       </section>
@@ -34,27 +49,29 @@ export default function AboutPage() {
               </div>
               
               <div className="bg-accent rounded-2xl p-6 shadow-sm">
-                <h3 className="font-heading text-xl font-bold text-primary mb-4 border-b border-primary/10 pb-4">Kısa Bilgiler</h3>
+                <h3 className="font-heading text-xl font-bold text-primary mb-4 border-b border-primary/10 pb-4">
+                  {locale === 'tr' ? 'Kısa Bilgiler' : 'Quick Facts'}
+                </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start">
                     <Briefcase className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-primary">Mevcut Kurum</p>
-                      <p className="text-sm text-foreground/70">Acıbadem Hastanesi</p>
+                      <p className="font-medium text-primary">{locale === 'tr' ? 'Mevcut Kurum' : 'Current Institution'}</p>
+                      <p className="text-sm text-foreground/70">{locale === 'tr' ? 'Acıbadem Hastanesi' : 'Acıbadem Hospital'}</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <GraduationCap className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-primary">Uzmanlık</p>
-                      <p className="text-sm text-foreground/70">Ortopedi ve Travmatoloji</p>
+                      <p className="font-medium text-primary">{locale === 'tr' ? 'Uzmanlık' : 'Specialization'}</p>
+                      <p className="text-sm text-foreground/70">{locale === 'tr' ? 'Ortopedi ve Travmatoloji' : 'Orthopedics and Traumatology'}</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <Award className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-primary">Deneyim</p>
-                      <p className="text-sm text-foreground/70">25+ Yıl</p>
+                      <p className="font-medium text-primary">{locale === 'tr' ? 'Deneyim' : 'Experience'}</p>
+                      <p className="text-sm text-foreground/70">25+ {locale === 'tr' ? 'Yıl' : 'Years'}</p>
                     </div>
                   </li>
                 </ul>
@@ -66,23 +83,32 @@ export default function AboutPage() {
               
               {/* Biography Text */}
               <div className="prose prose-lg max-w-none text-foreground/80">
-                <h2 className="font-heading text-3xl font-bold text-primary mb-6">Prof. Dr. Necdet Sağlam Kimdir?</h2>
-                <p>
-                  Tıp eğitimimi başarıyla tamamladıktan sonra Ortopedi ve Travmatoloji alanında uzmanlık eğitimimi aldım. Meslek hayatım boyunca hastalarımın yaşam kalitesini artırmak ve onlara ağrısız, özgürce hareket edebilecekleri bir yaşam sunmak en büyük motivasyonum oldu.
-                </p>
-                <p>
-                  Özellikle <strong>diz ve kalça protez cerrahisi</strong>, <strong>spor yaralanmaları</strong> ve <strong>artroskopik cerrahi</strong> alanlarında yoğunlaşarak, ulusal ve uluslararası alanda birçok bilimsel çalışmaya imza attım. Teknolojinin tıbba sunduğu en güncel yenilikleri yakından takip ediyor ve cerrahi pratiğimde uyguluyorum.
-                </p>
-                <p>
-                  Akademik kariyerim boyunca edindiğim "Profesör" unvanı, sadece bir akademik derece değil, aynı zamanda hastalarıma karşı taşıdığım sorumluluğun ve bilime olan bağlılığımın bir göstergesidir.
-                </p>
+                <h2 className="font-heading text-3xl font-bold text-primary mb-6">
+                  {locale === 'tr' ? 'Prof. Dr. Necdet Sağlam Kimdir?' : 'Who is Prof. Dr. Necdet Sağlam?'}
+                </h2>
+                
+                {biographyContent ? (
+                  <div dangerouslySetInnerHTML={{ __html: biographyContent }} />
+                ) : (
+                  <>
+                    <p>
+                      Tıp eğitimimi başarıyla tamamladıktan sonra Ortopedi ve Travmatoloji alanında uzmanlık eğitimimi aldım. Meslek hayatım boyunca hastalarımın yaşam kalitesini artırmak ve onlara ağrısız, özgürce hareket edebilecekleri bir yaşam sunmak en büyük motivasyonum oldu.
+                    </p>
+                    <p>
+                      Özellikle <strong>diz ve kalça protez cerrahisi</strong>, <strong>spor yaralanmaları</strong> ve <strong>artroskopik cerrahi</strong> alanlarında yoğunlaşarak, ulusal ve uluslararası alanda birçok bilimsel çalışmaya imza attım. Teknolojinin tıbba sunduğu en güncel yenilikleri yakından takip ediyor ve cerrahi pratiğimde uyguluyorum.
+                    </p>
+                    <p>
+                      Akademik kariyerim boyunca edindiğim "Profesör" unvanı, sadece bir akademik derece değil, aynı zamanda hastalarıma karşı taşıdığım sorumluluğun ve bilime olan bağlılığımın bir göstergesidir.
+                    </p>
+                  </>
+                )}
               </div>
 
               {/* Experience Timeline */}
               <div>
                 <h3 className="font-heading text-2xl font-bold text-primary mb-8 flex items-center">
                   <Briefcase className="w-6 h-6 mr-3 text-secondary" />
-                  Kariyer ve Deneyim
+                  {locale === 'tr' ? 'Kariyer ve Deneyim' : 'Career and Experience'}
                 </h3>
                 <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-secondary/30 before:to-transparent">
                   
@@ -93,10 +119,10 @@ export default function AboutPage() {
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-primary/5 group-hover:border-secondary/30 transition-colors">
                       <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-bold text-primary text-lg">Acıbadem Hastanesi</h4>
-                        <span className="text-sm font-medium text-secondary bg-secondary/10 px-3 py-1 rounded-full">Günümüz</span>
+                        <h4 className="font-bold text-primary text-lg">{locale === 'tr' ? 'Acıbadem Hastanesi' : 'Acıbadem Hospital'}</h4>
+                        <span className="text-sm font-medium text-secondary bg-secondary/10 px-3 py-1 rounded-full">{locale === 'tr' ? 'Günümüz' : 'Present'}</span>
                       </div>
-                      <p className="text-foreground/70">Ortopedi ve Travmatoloji Uzmanı</p>
+                      <p className="text-foreground/70">{locale === 'tr' ? 'Ortopedi ve Travmatoloji Uzmanı' : 'Orthopedics and Traumatology Specialist'}</p>
                     </div>
                   </div>
 
@@ -107,34 +133,13 @@ export default function AboutPage() {
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-primary/5 group-hover:border-secondary/30 transition-colors">
                       <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-bold text-primary text-lg">Profesörlük Ünvanı</h4>
-                        <span className="text-sm font-medium text-foreground/50">Geçmiş</span>
+                        <h4 className="font-bold text-primary text-lg">{locale === 'tr' ? 'Profesörlük Ünvanı' : 'Professorship Title'}</h4>
+                        <span className="text-sm font-medium text-foreground/50">{locale === 'tr' ? 'Geçmiş' : 'Past'}</span>
                       </div>
-                      <p className="text-foreground/70">Akademik kariyerde Profesörlük derecesinin alınması ve üniversite öğretim üyeliği.</p>
+                      <p className="text-foreground/70">{locale === 'tr' ? 'Akademik kariyerde Profesörlük derecesinin alınması ve üniversite öğretim üyeliği.' : 'Receiving the title of Professor in academic career and university faculty membership.'}</p>
                     </div>
                   </div>
 
-                </div>
-              </div>
-
-              {/* Memberships */}
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-primary mb-6 flex items-center">
-                  <BookOpen className="w-6 h-6 mr-3 text-secondary" />
-                  Bilimsel Dernek Üyelikleri
-                </h3>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {[
-                    "Türk Ortopedi ve Travmatoloji Birliği Derneği (TOTBİD)",
-                    "Türkiye Spor Yaralanmaları Artroskopi ve Diz Cerrahisi Derneği (TUSYAD)",
-                    "Türk Ortopedi ve Travmatoloji Eğitim Konseyi (TOTEK)",
-                    "Avrupa Ortopedi ve Travmatoloji Derneği (EFORT)"
-                  ].map((membership, index) => (
-                    <div key={index} className="flex items-start bg-accent p-4 rounded-xl">
-                      <CheckCircle2 className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
-                      <span className="text-foreground/80 font-medium">{membership}</span>
-                    </div>
-                  ))}
                 </div>
               </div>
 
@@ -147,7 +152,7 @@ export default function AboutPage() {
       <section className="py-16 bg-accent text-center">
         <div className="container mx-auto px-4">
           <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary mb-6">
-            Sağlığınız İçin Doğru Adrestesiniz
+            {c("ctaTitle")}
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
@@ -156,13 +161,13 @@ export default function AboutPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-bold transition-all shadow-md text-lg"
             >
-              Randevu Alın
+              {c("ctaButton")}
             </a>
             <Link
               href="/iletisim"
               className="inline-flex items-center justify-center bg-white border-2 border-primary/10 hover:border-primary/30 text-primary px-8 py-4 rounded-full font-bold transition-all text-lg"
             >
-              İletişime Geçin
+              {c("ctaContact")}
             </Link>
           </div>
         </div>

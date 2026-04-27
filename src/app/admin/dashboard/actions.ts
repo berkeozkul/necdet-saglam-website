@@ -2,25 +2,32 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { autoTranslate } from '@/utils/translate'
 
 // --- BLOG ACTIONS ---
 export async function createPost(formData: FormData) {
   const supabase = await createClient()
   
   const title = formData.get('title') as string
-  const title_en = formData.get('title_en') as string || title
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   
+  const excerpt = formData.get('excerpt') as string
+  const excerpt_en = formData.get('excerpt_en') as string || await autoTranslate(excerpt)
+
+  const content = formData.get('content') as string
+  const content_en = formData.get('content_en') as string || await autoTranslate(content)
+
   const { error } = await supabase.from('posts').insert({
     title,
     title_en,
     slug,
     slug_en,
-    excerpt: formData.get('excerpt') as string,
-    excerpt_en: formData.get('excerpt_en') as string || formData.get('excerpt') as string,
-    content: formData.get('content') as string,
-    content_en: formData.get('content_en') as string || formData.get('content') as string,
+    excerpt,
+    excerpt_en,
+    content,
+    content_en,
     image_url: formData.get('image_url') as string,
     is_published: formData.get('is_published') === 'on',
     is_pinned: formData.get('is_pinned') === 'on',
@@ -45,19 +52,25 @@ export async function createService(formData: FormData) {
   const supabase = await createClient()
   
   const title = formData.get('title') as string
-  const title_en = formData.get('title_en') as string || title
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   
+  const short_desc = formData.get('short_desc') as string
+  const short_desc_en = formData.get('short_desc_en') as string || await autoTranslate(short_desc)
+
+  const content = formData.get('content') as string
+  const content_en = formData.get('content_en') as string || await autoTranslate(content)
+
   const { error } = await supabase.from('services').insert({
     title,
     title_en,
     slug,
     slug_en,
-    short_desc: formData.get('short_desc') as string,
-    short_desc_en: formData.get('short_desc_en') as string || formData.get('short_desc') as string,
-    content: formData.get('content') as string,
-    content_en: formData.get('content_en') as string || formData.get('content') as string,
+    short_desc,
+    short_desc_en,
+    content,
+    content_en,
     icon: formData.get('icon') as string || 'Activity',
   })
 
@@ -79,11 +92,14 @@ export async function deleteService(id: string) {
 export async function updateAbout(formData: FormData) {
   const supabase = await createClient()
   
+  const content = formData.get('content') as string
+  const content_en = formData.get('content_en') as string || await autoTranslate(content)
+
   const { error } = await supabase
     .from('settings')
     .update({ 
-      content: formData.get('content') as string,
-      content_en: formData.get('content_en') as string || formData.get('content') as string,
+      content,
+      content_en,
       updated_at: new Date().toISOString()
     })
     .eq('id', 'about_me')
@@ -110,9 +126,12 @@ export async function createVideo(formData: FormData) {
     throw new Error("Lütfen geçerli bir YouTube linki girin.");
   }
 
+  const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
+
   const { error } = await supabase.from('videos').insert({
-    title: formData.get('title') as string,
-    title_en: formData.get('title_en') as string || formData.get('title') as string,
+    title,
+    title_en,
     youtube_url: youtube_url,
     is_pinned: formData.get('is_pinned') === 'on',
   })
@@ -168,13 +187,16 @@ export async function createGalleryItem(formData: FormData) {
       .getPublicUrl(fileName)
 
     // 3. Veritabanına kaydet
+    const title_en = formData.get('title_en') as string || await autoTranslate(title)
+    const album_name_en = formData.get('album_name_en') as string || await autoTranslate(album_name)
+
     const { error } = await supabase.from('gallery').insert({
       title,
-      title_en: formData.get('title_en') as string || title,
+      title_en,
       image_url: publicUrl,
       category,
       album_name,
-      album_name_en: formData.get('album_name_en') as string || album_name,
+      album_name_en,
       is_pinned: formData.get('is_pinned') === 'on',
     })
 
