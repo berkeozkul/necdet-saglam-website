@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const reviews = [
   {
@@ -40,18 +41,20 @@ const reviews = [
 ];
 
 export function Testimonials() {
+  const t = useTranslations("Home");
+
   return (
     <section id="yorumlar" className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center rounded-full border border-secondary/30 bg-secondary/10 px-3 py-1 text-sm font-medium text-secondary mb-4">
             <Star className="w-4 h-4 mr-2 fill-secondary" />
-            DoktorTakvimi.com Yorumları
+            {t("doktorTakvimiTag")}
           </div>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Hastalarımız Ne Diyor?</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">{t("patientReviews")}</h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6 rounded-full"></div>
           <p className="text-foreground/70 text-lg">
-            Yıllardır sağlığına kavuşturduğumuz binlerce hastamızın değerli geri bildirimleri.
+            {t("patientReviewsDesc")}
           </p>
         </div>
 
@@ -93,7 +96,7 @@ export function Testimonials() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center bg-white border-2 border-primary/10 hover:border-primary/30 text-primary px-8 py-4 rounded-full font-bold transition-all text-lg shadow-sm"
           >
-            Tüm Yorumları DoktorTakvimi'nde Gör
+            {t("readMoreReviews")}
             <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
           </a>
         </div>
