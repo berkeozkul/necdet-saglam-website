@@ -1,5 +1,6 @@
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { getTranslations, getLocale } from "next-intl/server";
+import { ContactForm } from "@/components/ui/ContactForm";
 
 export async function generateMetadata() {
   const t = await getTranslations("Contact");
@@ -116,80 +117,7 @@ export default async function ContactPage() {
                   : 'You can send us your message by filling out the form. We will get back to you as soon as possible.'}
               </p>
 
-              <form className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="firstName" className="text-sm font-medium text-primary">{locale === 'tr' ? 'Adınız' : 'First Name'}</label>
-                    <input 
-                      type="text" 
-                      id="firstName" 
-                      className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none"
-                      placeholder={locale === 'tr' ? 'Örn: Ahmet' : 'Ex: John'}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="lastName" className="text-sm font-medium text-primary">{locale === 'tr' ? 'Soyadınız' : 'Last Name'}</label>
-                    <input 
-                      type="text" 
-                      id="lastName" 
-                      className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none"
-                      placeholder={locale === 'tr' ? 'Örn: Yılmaz' : 'Ex: Doe'}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-medium text-primary">{t("formPhone")}</label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none"
-                    placeholder="05XX XXX XX XX"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium text-primary">{t("formSubject")}</label>
-                  <select 
-                    id="subject" 
-                    className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none appearance-none"
-                  >
-                    <option value="">{locale === 'tr' ? 'Seçiniz...' : 'Select...'}</option>
-                    <option value="randevu">{locale === 'tr' ? 'Randevu Talebi' : 'Appointment Request'}</option>
-                    <option value="bilgi">{locale === 'tr' ? 'Bilgi Alma' : 'Information'}</option>
-                    <option value="diger">{locale === 'tr' ? 'Diğer' : 'Other'}</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-primary">{t("formMessage")}</label>
-                  <textarea 
-                    id="message" 
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-accent border-transparent focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all outline-none resize-none"
-                    placeholder={locale === 'tr' ? 'Size nasıl yardımcı olabiliriz?' : 'How can we help you?'}
-                  ></textarea>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <input 
-                    type="checkbox" 
-                    id="kvkk" 
-                    className="mt-1 w-4 h-4 text-secondary bg-accent border-gray-300 rounded focus:ring-secondary"
-                  />
-                  <label htmlFor="kvkk" className="text-xs text-foreground/60 leading-relaxed">
-                    {t("formTerms")}
-                  </label>
-                </div>
-
-                <button 
-                  type="button" 
-                  className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center group"
-                >
-                  {t("formSubmit")}
-                  <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
-              </form>
+              <ContactForm />
             </div>
 
           </div>
