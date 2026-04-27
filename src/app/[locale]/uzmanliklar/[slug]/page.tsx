@@ -5,15 +5,6 @@ import { getIconComponent } from "@/data/services";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/utils/supabase/server";
 
-// Generate static params for all service pages
-export async function generateStaticParams() {
-  const supabase = await createClient();
-  const { data: services } = await supabase.from('services').select('slug');
-  return (services || []).map((service) => ({
-    slug: service.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const supabase = await createClient();
