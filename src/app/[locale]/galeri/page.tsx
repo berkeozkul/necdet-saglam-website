@@ -73,7 +73,11 @@ export default async function GalleryPage() {
                       <p className="text-foreground/50 text-sm mt-2">{items.length} {locale === 'tr' ? 'Fotoğraf' : 'Photos'}</p>
                     </div>
                     <span className="hidden sm:inline-block px-4 py-2 bg-secondary/10 text-secondary text-sm font-bold rounded-full">
-                      {items[0].category}
+                      {locale === 'en' && items[0].category === 'Vaka Sonucu' ? 'Case Result' : 
+                       locale === 'en' && items[0].category === 'Ameliyathane' ? 'Operating Room' : 
+                       locale === 'en' && items[0].category === 'Klinik' ? 'Clinic' : 
+                       locale === 'en' && items[0].category === 'Genel' ? 'General' : 
+                       items[0].category}
                     </span>
                   </div>
 

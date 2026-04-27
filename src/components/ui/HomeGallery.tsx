@@ -21,9 +21,8 @@ export async function HomeGallery() {
 
   // Fotoğrafları albümlere göre grupla
   const groupedGallery: Record<string, any[]> = galleryItems.reduce((acc, item) => {
-    // İngilizce ise album_name_en kullan
     const albumNameField = locale === 'en' && item.album_name_en ? item.album_name_en : item.album_name;
-    const album = albumNameField || 'Genel Vaka';
+    const album = albumNameField || (locale === 'tr' ? 'Genel Vaka' : 'General Case');
     if (!acc[album]) {
       acc[album] = [];
     }
@@ -78,7 +77,11 @@ export async function HomeGallery() {
                 <div className="absolute inset-0 p-6 flex flex-col justify-end">
                   <div className="flex items-center justify-between mb-2">
                     <span className="inline-flex items-center px-3 py-1 bg-secondary/90 backdrop-blur-sm text-white text-xs font-bold rounded-full">
-                      {coverImage.category}
+                      {locale === 'en' && coverImage.category === 'Vaka Sonucu' ? 'Case Result' : 
+                       locale === 'en' && coverImage.category === 'Ameliyathane' ? 'Operating Room' : 
+                       locale === 'en' && coverImage.category === 'Klinik' ? 'Clinic' : 
+                       locale === 'en' && coverImage.category === 'Genel' ? 'General' : 
+                       coverImage.category}
                     </span>
                     <span className="inline-flex items-center text-white/80 text-sm font-medium">
                       <ImageIcon className="w-4 h-4 mr-1.5" />
