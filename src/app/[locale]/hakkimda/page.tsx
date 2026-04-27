@@ -26,7 +26,7 @@ export default async function AboutPage() {
   const timelineData = [
     { year: "2025", titleTr: "Acıbadem Sağlık Grubu", titleEn: "Acıbadem Healthcare Group", descTr: "Ortopedi ve Travmatoloji Uzmanı", descEn: "Orthopedics and Traumatology Specialist", current: true },
     { year: "2024 – 2025", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Profesör", descEn: "Professor" },
-    { year: "2024", titleTr: "Başakşehir Çam ve Sakura Şehir Hastanesi", titleEn: "Basaksehir Cam and Sakura City Hospital", descTr: "Profesör", descEn: "Professor" },
+    { year: "2024", titleTr: "Başakşehir Çam ve Sakura Şehir Hastanesi", titleEn: "Basaksehir Cam and Sakura City Hospital", descTr: "Başhekim", descEn: "Chief Physician" },
     { year: "2017 – 2024", titleTr: "SBÜ Ümraniye Eğitim ve Araştırma Merkezi", titleEn: "SBU Umraniye Training and Research Center", descTr: "Başhekim", descEn: "Chief Physician" },
     { year: "2014 – 2017", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Doçent Doktor", descEn: "Associate Professor" },
     { year: "2011 – 2014", titleTr: "Ümraniye Eğitim ve Araştırma Hastanesi", titleEn: "Umraniye Training and Research Hospital", descTr: "Başasistan", descEn: "Chief Assistant" },
@@ -103,37 +103,38 @@ export default async function AboutPage() {
                 {biographyContent ? (
                   <div dangerouslySetInnerHTML={{ __html: biographyContent }} />
                 ) : (
-                  <>
-                    <p>
-                      {locale === 'tr' 
-                        ? 'Prof. Dr. Necdet Sağlam, ortopedi ve travmatoloji alanında 30 yılı aşkın deneyime sahip olup, özellikle kalça ve diz protez cerrahisi, travma cerrahisi ve omurga cerrahisi üzerine çalışmalar yürütmektedir. Akademik yaşamı boyunca hem eğitim hem de sağlık hizmetlerinde yenilikçi uygulamalara öncülük etmiştir.'
-                        : 'Prof. Dr. Necdet Sağlam has over 30 years of experience in the field of orthopedics and traumatology, focusing especially on hip and knee replacement surgery, trauma surgery, and spinal surgery. Throughout his academic life, he has pioneered innovative practices in both education and healthcare services.'}
-                    </p>
-
-                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Eğitim' : 'Education'}</h3>
-                    <ul className="list-none space-y-2 pl-0">
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>2000</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi Ortopedi ve Travmatoloji</span></li>
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>1995</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi</span></li>
-                    </ul>
-
-                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Üyelikler' : 'Memberships'}</h3>
-                    <ul className="list-none space-y-2 pl-0">
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTDER</strong> — Türk Ortopedi ve Travmatoloji Derneği (Yönetim Kurulu Üyesi)</span></li>
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTEK</strong> — Türk Ortopedi ve Travmatoloji Eğitim Konseyi</span></li>
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOD</strong> — Türk Omurga Derneği</span></li>
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kalça Diz Artroplasti Derneği</span></li>
-                      <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTBİD</strong> — Türk Ortopedi ve Travmatoloji Birliği Derneği</span></li>
-                    </ul>
-
-                    <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Öne Çıkan Bilimsel Yayınlar' : 'Featured Scientific Publications'}</h3>
-                    <ul className="list-none space-y-3 pl-0 text-sm">
-                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Mid-term survivorship and clinical results of cementless total hip arthroplasty for steroid-induced avascular necrosis (North Clin Istanb. 2024)</span></li>
-                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Is step-cut shortening osteotomy a better choice than transverse osteotomy for total hip arthroplasty for Crowe type III-IV hip dysplasia? (Orthop Traumatol Surg Res. 2024)</span></li>
-                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kyphectomy and sliding growing rod technique in patients with congenital lumbar kyphosis deformity (J Orthop Surg Res. 2024)</span></li>
-                      <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Radiographic and clinical outcomes of distal tibia fractures: Comparison of two intramedullary nailing (Ulus Travma Acil Cerrahi Derg. 2022)</span></li>
-                    </ul>
-                  </>
+                  <p>
+                    {locale === 'tr' 
+                      ? 'Prof. Dr. Necdet Sağlam, ortopedi ve travmatoloji alanında 30 yılı aşkın deneyime sahip olup, özellikle kalça ve diz protez cerrahisi, travma cerrahisi ve omurga cerrahisi üzerine çalışmalar yürütmektedir. Akademik yaşamı boyunca hem eğitim hem de sağlık hizmetlerinde yenilikçi uygulamalara öncülük etmiştir.'
+                      : 'Prof. Dr. Necdet Sağlam has over 30 years of experience in the field of orthopedics and traumatology, focusing especially on hip and knee replacement surgery, trauma surgery, and spinal surgery. Throughout his academic life, he has pioneered innovative practices in both education and healthcare services.'}
+                  </p>
                 )}
+
+                <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Eğitim' : 'Education'}</h3>
+                <ul className="list-none space-y-2 pl-0">
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>2000</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi Ortopedi ve Travmatoloji</span></li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>1995</strong> — İstanbul Üniversitesi İstanbul Tıp Fakültesi</span></li>
+                </ul>
+
+                <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Üyelikler' : 'Memberships'}</h3>
+                <ul className="list-none space-y-2 pl-0">
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTDER</strong> — Türk Ortopedi ve Travmatoloji Derneği (Yönetim Kurulu Üyesi)</span></li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTEK</strong> — Türk Ortopedi ve Travmatoloji Eğitim Konseyi</span></li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOD</strong> — Türk Omurga Derneği</span></li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kalça Diz Artroplasti Derneği</span></li>
+                  <li className="flex items-start"><CheckCircle2 className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span><strong>TOTBİD</strong> — Türk Ortopedi ve Travmatoloji Birliği Derneği</span></li>
+                </ul>
+
+                <h3 className="font-heading text-2xl font-bold text-primary mt-8 mb-4">{locale === 'tr' ? 'Öne Çıkan Bilimsel Yayınlar' : 'Featured Scientific Publications'}</h3>
+                <ul className="list-none space-y-3 pl-0 text-sm">
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Mid-term survivorship and clinical results of cementless total hip arthroplasty for steroid-induced avascular necrosis (North Clin Istanb. 2024)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Is step-cut shortening osteotomy a better choice than transverse osteotomy for total hip arthroplasty for Crowe type III-IV hip dysplasia? (Orthop Traumatol Surg Res. 2024)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Kyphectomy and sliding growing rod technique in patients with congenital lumbar kyphosis deformity (J Orthop Surg Res. 2024)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Radiographic and clinical outcomes of distal tibia fractures: Comparison of two intramedullary nailing (Ulus Travma Acil Cerrahi Derg. 2022)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Is Obesity Associated with Higher Complication Rates in Total Hip Arthroplasty? (Indian J Orthop. 2021)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>Comparison of Four Different Posterior Screw Fixation Techniques (World Neurosurg. 2019)</span></li>
+                  <li className="flex items-start"><BookOpen className="w-5 h-5 text-secondary mr-2 shrink-0 mt-0.5" /> <span>The combined administration of systemic and topical tranexamic acid for total hip arthroplasty (Acta Orthop Traumatol Turc. 2019)</span></li>
+                </ul>
               </div>
 
               {/* Experience Timeline */}
