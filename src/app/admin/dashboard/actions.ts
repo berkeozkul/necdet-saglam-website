@@ -17,6 +17,7 @@ export async function createPost(formData: FormData) {
     content: formData.get('content') as string,
     image_url: formData.get('image_url') as string,
     is_published: formData.get('is_published') === 'on',
+    is_pinned: formData.get('is_pinned') === 'on',
   })
 
   if (error) throw new Error(error.message)
@@ -96,6 +97,7 @@ export async function createVideo(formData: FormData) {
   const { error } = await supabase.from('videos').insert({
     title: formData.get('title') as string,
     youtube_url: youtube_url,
+    is_pinned: formData.get('is_pinned') === 'on',
   })
 
   if (error) throw new Error(error.message)
@@ -151,7 +153,8 @@ export async function createGalleryItem(formData: FormData) {
       title,
       image_url: publicUrl,
       category,
-      album_name
+      album_name,
+      is_pinned: formData.get('is_pinned') === 'on',
     })
 
     if (error) throw new Error(error.message)
@@ -174,6 +177,33 @@ export async function deleteGalleryItem(id: string) {
 export async function deleteAlbum(albumName: string) {
   const supabase = await createClient()
   const { error } = await supabase.from('gallery').delete().eq('album_name', albumName)
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/gallery')
+  revalidatePath('/galeri')
+  revalidatePath('/')
+}
+
+export async function togglePostPin(id: string, currentState: boolean) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('posts').update({ is_pinned: !currentState }).eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/blog')
+  revalidatePath('/makaleler')
+  revalidatePath('/')
+}
+
+export async function toggleVideoPin(id: string, currentState: boolean) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('videos').update({ is_pinned: !currentState }).eq('id', id)
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/videos')
+  revalidatePath('/videolar')
+  revalidatePath('/')
+}
+
+export async function toggleAlbumPin(albumName: string, currentState: boolean) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('gallery').update({ is_pinned: !currentState }).eq('album_name', albumName)
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/gallery')
   revalidatePath('/galeri')

@@ -15,6 +15,7 @@ export default async function BlogPage() {
     .from('posts')
     .select('*')
     .eq('is_published', true)
+    .order('is_pinned', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
 
   return (

@@ -9,6 +9,7 @@ export async function HomeVideos() {
   const { data: videos } = await supabase
     .from('videos')
     .select('*')
+    .order('is_pinned', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
     .limit(2);
 

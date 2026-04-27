@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function VideosPage() {
   const supabase = await createClient()
-  const { data: videos } = await supabase.from('videos').select('*').order('created_at', { ascending: false })
+  const { data: videos } = await supabase.from('videos').select('*').order('is_pinned', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">

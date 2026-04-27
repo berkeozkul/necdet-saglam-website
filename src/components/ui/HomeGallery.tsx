@@ -9,6 +9,7 @@ export async function HomeGallery() {
   const { data: galleryItems } = await supabase
     .from('gallery')
     .select('*')
+    .order('is_pinned', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false });
 
   if (!galleryItems || galleryItems.length === 0) {

@@ -10,6 +10,7 @@ export async function RecentPosts() {
     .from('posts')
     .select('*')
     .eq('is_published', true)
+    .order('is_pinned', { ascending: false, nullsFirst: false })
     .order('created_at', { ascending: false })
     .limit(3);
 

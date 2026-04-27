@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function GalleryPage() {
   const supabase = await createClient()
-  const { data: galleryItems } = await supabase.from('gallery').select('*').order('created_at', { ascending: false })
+  const { data: galleryItems } = await supabase.from('gallery').select('*').order('is_pinned', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
 
   // Fotoğrafları "album_name" değerine göre gruplama
   const groupedGallery: Record<string, any[]> = galleryItems?.reduce((acc, item) => {

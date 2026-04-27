@@ -1,10 +1,10 @@
 import { createClient } from '@/utils/supabase/server'
-import { createPost, deletePost } from '../actions'
+import { createPost, deletePost, togglePostPin } from '../actions'
 import Link from 'next/link'
 
 export default async function BlogAdminPage() {
   const supabase = await createClient()
-  const { data: posts } = await supabase.from('posts').select('*').order('created_at', { ascending: false })
+  const { data: posts } = await supabase.from('posts').select('*').order('is_pinned', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -44,9 +44,15 @@ export default async function BlogAdminPage() {
               <input type="url" id="image_url" name="image_url" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
             </div>
 
-            <div className="flex items-center">
-              <input type="checkbox" id="is_published" name="is_published" defaultChecked className="w-4 h-4 text-secondary bg-slate-100 border-slate-300 rounded focus:ring-secondary" />
-              <label htmlFor="is_published" className="ml-2 text-sm font-medium text-slate-700">Hemen Yayınla</label>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <input type="checkbox" id="is_published" name="is_published" defaultChecked className="w-4 h-4 text-secondary bg-slate-100 border-slate-300 rounded focus:ring-secondary" />
+                <label htmlFor="is_published" className="ml-2 text-sm font-medium text-slate-700">Hemen Yayınla</label>
+              </div>
+              <div className="flex items-center">
+                <input type="checkbox" id="is_pinned" name="is_pinned" className="w-4 h-4 text-secondary bg-slate-100 border-slate-300 rounded focus:ring-secondary" />
+                <label htmlFor="is_pinned" className="ml-2 text-sm font-medium text-slate-700">Başa Tuttur</label>
+              </div>
             </div>
 
             <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
@@ -70,7 +76,10 @@ export default async function BlogAdminPage() {
                   <li key={post.id} className="p-6 hover:bg-slate-50 transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0 pr-4">
-                        <h3 className="text-lg font-bold text-slate-900 truncate">{post.title}</h3>
+                        <div className="flex items-center space-x-2">
+                          {post.is_pinned && <svg className="w-4 h-4 text-secondary" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>}
+                          <h3 className="text-lg font-bold text-slate-900 truncate">{post.title}</h3>
+                        </div>
                         <p className="text-sm text-slate-500 mt-1 line-clamp-2">{post.excerpt}</p>
                         <div className="mt-2 flex items-center text-xs text-slate-400">
                           <span className={`px-2 py-1 rounded-full ${post.is_published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
@@ -81,7 +90,15 @@ export default async function BlogAdminPage() {
                         </div>
                       </div>
                       
-                      <div>
+                      <div className="flex items-center space-x-2">
+                        <form action={async () => {
+                          'use server'
+                          await togglePostPin(post.id, post.is_pinned)
+                        }}>
+                          <button type="submit" className={`p-2 rounded-lg transition-colors ${post.is_pinned ? 'text-secondary bg-secondary/10 hover:bg-secondary/20' : 'text-slate-400 bg-slate-50 hover:bg-slate-100 hover:text-slate-600'}`} title={post.is_pinned ? "Tutturmayı Kaldır" : "Başa Tuttur"}>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>
+                          </button>
+                        </form>
                         <form action={async () => {
                           'use server'
                           await deletePost(post.id)

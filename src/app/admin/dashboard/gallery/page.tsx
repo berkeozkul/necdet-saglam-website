@@ -1,10 +1,10 @@
 import { createClient } from '@/utils/supabase/server'
-import { createGalleryItem, deleteGalleryItem, deleteAlbum } from '../actions'
+import { createGalleryItem, deleteGalleryItem, deleteAlbum, toggleAlbumPin } from '../actions'
 import Link from 'next/link'
 
 export default async function GalleryAdminPage() {
   const supabase = await createClient()
-  const { data: galleryItems } = await supabase.from('gallery').select('*').order('created_at', { ascending: false })
+  const { data: galleryItems } = await supabase.from('gallery').select('*').order('is_pinned', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
 
   // Fotoğrafları "album_name" değerine göre gruplama
   const groupedGallery: Record<string, any[]> = galleryItems?.reduce((acc, item) => {
@@ -69,6 +69,13 @@ export default async function GalleryAdminPage() {
               </select>
             </div>
 
+            <div className="flex items-center space-x-4 mt-2">
+              <div className="flex items-center">
+                <input type="checkbox" id="is_pinned" name="is_pinned" className="w-4 h-4 text-secondary bg-slate-100 border-slate-300 rounded focus:ring-secondary" />
+                <label htmlFor="is_pinned" className="ml-2 text-sm font-medium text-slate-700">Albümü Başa Tuttur</label>
+              </div>
+            </div>
+
             <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors mt-4">
               Fotoğrafı Yükle
             </button>
@@ -92,18 +99,31 @@ export default async function GalleryAdminPage() {
                       
                       {/* Albüm Başlığı ve Toplu Silme Butonu */}
                       <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
-                        <div>
-                          <h3 className="text-lg font-bold text-primary">{albumName}</h3>
-                          <p className="text-sm text-slate-500">{items.length} Fotoğraf • {items[0].category}</p>
+                        <div className="flex items-center space-x-2">
+                          {items[0].is_pinned && <svg className="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>}
+                          <div>
+                            <h3 className="text-lg font-bold text-primary">{albumName}</h3>
+                            <p className="text-sm text-slate-500">{items.length} Fotoğraf • {items[0].category}</p>
+                          </div>
                         </div>
-                        <form action={async () => {
-                          'use server'
-                          await deleteAlbum(albumName)
-                        }}>
-                          <button type="submit" className="text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-red-100">
-                            Tüm Albümü Sil
-                          </button>
-                        </form>
+                        <div className="flex space-x-2">
+                          <form action={async () => {
+                            'use server'
+                            await toggleAlbumPin(albumName, items[0].is_pinned)
+                          }}>
+                            <button type="submit" className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border ${items[0].is_pinned ? 'text-secondary bg-secondary/10 border-secondary/20 hover:bg-secondary/20' : 'text-slate-600 bg-slate-50 border-slate-200 hover:bg-slate-100'}`}>
+                              {items[0].is_pinned ? "Tutturmayı Kaldır" : "Başa Tuttur"}
+                            </button>
+                          </form>
+                          <form action={async () => {
+                            'use server'
+                            await deleteAlbum(albumName)
+                          }}>
+                            <button type="submit" className="text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-red-100">
+                              Tüm Albümü Sil
+                            </button>
+                          </form>
+                        </div>
                       </div>
 
                       {/* Albüm İçindeki Fotoğraflar */}

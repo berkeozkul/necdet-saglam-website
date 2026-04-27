@@ -1,10 +1,10 @@
 import { createClient } from '@/utils/supabase/server'
-import { createVideo, deleteVideo } from '../actions'
+import { createVideo, deleteVideo, toggleVideoPin } from '../actions'
 import Link from 'next/link'
 
 export default async function VideosAdminPage() {
   const supabase = await createClient()
-  const { data: videos } = await supabase.from('videos').select('*').order('created_at', { ascending: false })
+  const { data: videos } = await supabase.from('videos').select('*').order('is_pinned', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
@@ -34,6 +34,13 @@ export default async function VideosAdminPage() {
               <label htmlFor="youtube_url" className="block text-sm font-medium text-slate-700 mb-1">YouTube Linki</label>
               <input type="url" id="youtube_url" name="youtube_url" required placeholder="https://www.youtube.com/watch?v=..." className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
               <p className="text-xs text-slate-500 mt-1">Videoyu YouTube'da açıp adres çubuğundaki linki kopyalayıp buraya yapıştırın.</p>
+            </div>
+
+            <div className="flex items-center space-x-4 mt-2">
+              <div className="flex items-center">
+                <input type="checkbox" id="is_pinned" name="is_pinned" className="w-4 h-4 text-secondary bg-slate-100 border-slate-300 rounded focus:ring-secondary" />
+                <label htmlFor="is_pinned" className="ml-2 text-sm font-medium text-slate-700">Başa Tuttur</label>
+              </div>
             </div>
 
             <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors mt-4">
@@ -73,18 +80,31 @@ export default async function VideosAdminPage() {
                       </div>
                       
                       <div className="p-4 bg-white flex-grow flex flex-col justify-between">
-                        <h3 className="font-bold text-slate-900 text-sm line-clamp-2 mb-4">{video.title}</h3>
+                        <div className="flex items-start justify-between mb-4 gap-2">
+                          <h3 className="font-bold text-slate-900 text-sm line-clamp-2">{video.title}</h3>
+                          {video.is_pinned && <svg className="w-4 h-4 text-secondary shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>}
+                        </div>
                         
-                        <form action={async () => {
-                          'use server'
-                          await deleteVideo(video.id)
-                        }}>
-                          <button type="submit" className="w-full text-red-500 bg-red-50 hover:bg-red-100 py-2 rounded-lg transition-colors text-xs font-bold flex items-center justify-center">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                            Videoyu Sil
-                          </button>
-                        </form>
-                      </div>
+                        <div className="flex gap-2">
+                          <form action={async () => {
+                            'use server'
+                            await toggleVideoPin(video.id, video.is_pinned)
+                          }} className="flex-1">
+                            <button type="submit" className={`w-full py-2 rounded-lg transition-colors text-xs font-bold flex items-center justify-center ${video.is_pinned ? 'text-secondary bg-secondary/10 hover:bg-secondary/20' : 'text-slate-400 bg-slate-50 hover:bg-slate-100 hover:text-slate-600'}`} title={video.is_pinned ? "Tutturmayı Kaldır" : "Başa Tuttur"}>
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>
+                              {video.is_pinned ? "Kaldır" : "Tuttur"}
+                            </button>
+                          </form>
+                          <form action={async () => {
+                            'use server'
+                            await deleteVideo(video.id)
+                          }} className="flex-1">
+                            <button type="submit" className="w-full text-red-500 bg-red-50 hover:bg-red-100 py-2 rounded-lg transition-colors text-xs font-bold flex items-center justify-center">
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                              Sil
+                            </button>
+                          </form>
+                        </div>
                     </div>
                   ))}
                 </div>
