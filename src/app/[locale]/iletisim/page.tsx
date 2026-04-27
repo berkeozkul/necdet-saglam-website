@@ -53,22 +53,13 @@ export default async function ContactPage() {
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">{t("addressTitle")}</h3>
                   <p className="text-foreground/70 mb-4">
-                    Acıbadem {locale === 'tr' ? 'Hastanesi' : 'Hospital'}<br />
+                    Acıbadem {locale === 'tr' ? 'Kartal Hastanesi' : 'Kartal Hospital'}<br />
                     {locale === 'tr' ? 'Ortopedi ve Travmatoloji Kliniği' : 'Orthopedics and Traumatology Clinic'}<br />
                     {locale === 'tr' ? 'İstanbul, Türkiye' : 'Istanbul, Turkey'}
                   </p>
                   <a href="https://maps.app.goo.gl/cvD4n4tN1zK9ucE27" target="_blank" rel="noopener noreferrer" className="text-secondary font-bold hover:text-primary transition-colors flex items-center text-sm">
                     {locale === 'tr' ? 'Haritada Gör' : 'View on Map'}
                   </a>
-                </div>
-
-                {/* Phone Card */}
-                <div className="bg-accent p-6 rounded-2xl border border-primary/5 hover:border-secondary/30 transition-colors shadow-sm">
-                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
-                    <Phone className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-bold text-primary text-lg mb-2">{t("phoneTitle")}</h3>
-                  <p className="text-foreground/70 mb-2">{locale === 'tr' ? 'Randevu ve Bilgi için:' : 'For Appointment and Info:'}</p>
                 </div>
 
                 {/* Email Card */}
@@ -78,13 +69,13 @@ export default async function ContactPage() {
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">{t("emailTitle")}</h3>
                   <p className="text-foreground/70 mb-2">{locale === 'tr' ? 'Sorularınız için:' : 'For your questions:'}</p>
-                  <a href="mailto:info@necdetsaglam.com" className="text-secondary font-bold hover:text-primary transition-colors">
-                    info@necdetsaglam.com
+                  <a href="mailto:necdet.saglam@acibadem.com" className="text-secondary font-bold hover:text-primary transition-colors text-sm md:text-base break-all">
+                    necdet.saglam@acibadem.com
                   </a>
                 </div>
 
                 {/* Hours Card */}
-                <div className="bg-accent p-6 rounded-2xl border border-primary/5 hover:border-secondary/30 transition-colors shadow-sm">
+                <div className="bg-accent p-6 rounded-2xl border border-primary/5 hover:border-secondary/30 transition-colors shadow-sm sm:col-span-2 md:col-span-1 xl:col-span-2">
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary mb-4 shadow-sm">
                     <Clock className="w-6 h-6" />
                   </div>

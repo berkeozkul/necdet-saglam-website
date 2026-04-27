@@ -126,8 +126,8 @@ export function Footer() {
               </li>
               <li className="flex items-center text-sm text-primary-foreground/70">
                 <Mail className="w-5 h-5 mr-3 text-secondary shrink-0" />
-                <a href="mailto:info@necdetsaglam.com" className="hover:text-white transition-colors">
-                  info@necdetsaglam.com
+                <a href="mailto:necdet.saglam@acibadem.com" className="hover:text-white transition-colors">
+                  necdet.saglam@acibadem.com
                 </a>
               </li>
             </ul>
