@@ -36,14 +36,24 @@ export default async function GalleryAdminPage() {
           <form action={createGalleryItem} className="space-y-4">
             
             <div>
-              <label htmlFor="album_name" className="block text-sm font-medium text-slate-700 mb-1">Albüm / Vaka Adı</label>
+              <label htmlFor="album_name" className="block text-sm font-medium text-slate-700 mb-1">Albüm / Vaka Adı (TR)</label>
               <input type="text" id="album_name" name="album_name" required placeholder="Örn: Ahmet Bey - Diz Protezi" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
               <p className="text-xs text-slate-500 mt-1">Aynı vakaya ait fotoğrafları aynı albüm adıyla kaydederseniz gruplanırlar.</p>
             </div>
 
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Fotoğraf Açıklaması</label>
+              <label htmlFor="album_name_en" className="block text-sm font-medium text-slate-700 mb-1">Albüm / Vaka Adı (EN)</label>
+              <input type="text" id="album_name_en" name="album_name_en" placeholder="Opsiyonel: Mr. Ahmet - Knee Replacement" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
+            </div>
+
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Fotoğraf Açıklaması (TR)</label>
               <input type="text" id="title" name="title" required placeholder="Örn: Ameliyat sonrası 2. gün" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
+            </div>
+
+            <div>
+              <label htmlFor="title_en" className="block text-sm font-medium text-slate-700 mb-1">Fotoğraf Açıklaması (EN)</label>
+              <input type="text" id="title_en" name="title_en" placeholder="Opsiyonel: Post-op day 2" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
             </div>
             
             <div>

@@ -25,18 +25,33 @@ export default async function ServicesAdminPage() {
           <h2 className="text-xl font-bold text-primary mb-6">Yeni Uzmanlık Ekle</h2>
           <form action={createService} className="space-y-4">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Başlık</label>
+              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Başlık (TR)</label>
               <input type="text" id="title" name="title" required placeholder="Örn: Diz Protezi" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
+            </div>
+
+            <div>
+              <label htmlFor="title_en" className="block text-sm font-medium text-slate-700 mb-1">Başlık (EN)</label>
+              <input type="text" id="title_en" name="title_en" placeholder="Opsiyonel: Knee Replacement" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
             </div>
             
             <div>
-              <label htmlFor="short_desc" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (Anasayfa için)</label>
+              <label htmlFor="short_desc" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (TR - Anasayfa için)</label>
               <textarea id="short_desc" name="short_desc" rows={2} required className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-1">Detaylı İçerik (HTML destekler)</label>
+              <label htmlFor="short_desc_en" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (EN)</label>
+              <textarea id="short_desc_en" name="short_desc_en" rows={2} placeholder="Opsiyonel: İngilizce Kısa Açıklama" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-1">Detaylı İçerik (TR - HTML destekler)</label>
               <textarea id="content" name="content" rows={6} required className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="content_en" className="block text-sm font-medium text-slate-700 mb-1">Detaylı İçerik (EN - HTML destekler)</label>
+              <textarea id="content_en" name="content_en" rows={6} placeholder="Opsiyonel: İngilizce Detaylı İçerik" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
             </div>
 
             <div>

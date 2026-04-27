@@ -57,7 +57,7 @@ export default async function SearchPage({
           <h1 className="font-heading text-3xl md:text-4xl font-bold mb-4">Arama Sonuçları</h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
             {decodedQuery ? (
-              <span className="font-semibold text-secondary">"{decodedQuery}"</span> için bulunan sonuçlar
+              <><span className="font-semibold text-secondary">"{decodedQuery}"</span> için bulunan sonuçlar</>
             ) : (
               "Lütfen aramak istediğiniz kelimeyi girin."
             )}

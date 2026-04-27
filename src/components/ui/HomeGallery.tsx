@@ -1,9 +1,12 @@
 import { createClient } from '@/utils/supabase/server';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { ArrowRight, Image as ImageIcon } from 'lucide-react';
+import { getTranslations, getLocale } from 'next-intl/server';
 
 export async function HomeGallery() {
   const supabase = await createClient();
+  const t = await getTranslations('Home');
+  const locale = await getLocale();
   
   // En son eklenen fotoğrafları getir
   const { data: galleryItems } = await supabase
@@ -18,7 +21,9 @@ export async function HomeGallery() {
 
   // Fotoğrafları albümlere göre grupla
   const groupedGallery: Record<string, any[]> = galleryItems.reduce((acc, item) => {
-    const album = item.album_name || 'Genel Vaka';
+    // İngilizce ise album_name_en kullan
+    const albumNameField = locale === 'en' && item.album_name_en ? item.album_name_en : item.album_name;
+    const album = albumNameField || 'Genel Vaka';
     if (!acc[album]) {
       acc[album] = [];
     }
@@ -34,17 +39,17 @@ export async function HomeGallery() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div className="max-w-2xl">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">Vaka Galerisi</h2>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary mb-4">{t('galleryTitle')}</h2>
             <div className="w-24 h-1 bg-secondary mb-6 rounded-full"></div>
             <p className="text-foreground/70 text-lg">
-              Başarılı operasyonlarımızdan ve kliniğimizden kareler.
+              {t('galleryDesc')}
             </p>
           </div>
           <Link 
             href="/galeri"
             className="inline-flex items-center text-secondary font-bold hover:text-primary transition-colors mt-4 md:mt-0 group"
           >
-            Tüm Galeriyi Gör
+            {t('viewAllPhotos')}
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -77,7 +82,7 @@ export async function HomeGallery() {
                     </span>
                     <span className="inline-flex items-center text-white/80 text-sm font-medium">
                       <ImageIcon className="w-4 h-4 mr-1.5" />
-                      {items.length} Fotoğraf
+                      {items.length} {locale === 'tr' ? 'Fotoğraf' : 'Photos'}
                     </span>
                   </div>
                   <h3 className="text-white font-heading text-xl font-bold leading-tight group-hover:text-secondary transition-colors">

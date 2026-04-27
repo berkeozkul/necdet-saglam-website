@@ -25,18 +25,33 @@ export default async function BlogAdminPage() {
           <h2 className="text-xl font-bold text-primary mb-6">Yeni Makale Ekle</h2>
           <form action={createPost} className="space-y-4">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Başlık</label>
+              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Başlık (TR)</label>
               <input type="text" id="title" name="title" required className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
+            </div>
+
+            <div>
+              <label htmlFor="title_en" className="block text-sm font-medium text-slate-700 mb-1">Başlık (EN)</label>
+              <input type="text" id="title_en" name="title_en" placeholder="Opsiyonel: İngilizce Başlık" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
             </div>
             
             <div>
-              <label htmlFor="excerpt" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (Özet)</label>
+              <label htmlFor="excerpt" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (TR)</label>
               <textarea id="excerpt" name="excerpt" rows={2} required className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-1">İçerik (HTML destekler)</label>
+              <label htmlFor="excerpt_en" className="block text-sm font-medium text-slate-700 mb-1">Kısa Açıklama (EN)</label>
+              <textarea id="excerpt_en" name="excerpt_en" rows={2} placeholder="Opsiyonel: İngilizce Özet" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-1">İçerik (TR - HTML destekler)</label>
               <textarea id="content" name="content" rows={6} required className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="content_en" className="block text-sm font-medium text-slate-700 mb-1">İçerik (EN - HTML destekler)</label>
+              <textarea id="content_en" name="content_en" rows={6} placeholder="Opsiyonel: İngilizce İçerik" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none resize-none"></textarea>
             </div>
 
             <div>

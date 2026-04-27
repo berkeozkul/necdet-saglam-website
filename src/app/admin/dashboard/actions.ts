@@ -8,13 +8,19 @@ export async function createPost(formData: FormData) {
   const supabase = await createClient()
   
   const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || title
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   
   const { error } = await supabase.from('posts').insert({
     title,
+    title_en,
     slug,
+    slug_en,
     excerpt: formData.get('excerpt') as string,
+    excerpt_en: formData.get('excerpt_en') as string || formData.get('excerpt') as string,
     content: formData.get('content') as string,
+    content_en: formData.get('content_en') as string || formData.get('content') as string,
     image_url: formData.get('image_url') as string,
     is_published: formData.get('is_published') === 'on',
     is_pinned: formData.get('is_pinned') === 'on',
@@ -23,6 +29,7 @@ export async function createPost(formData: FormData) {
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/blog')
   revalidatePath('/makaleler') // Frontend blog path
+  revalidatePath('/en/makaleler')
 }
 
 export async function deletePost(id: string) {
@@ -38,19 +45,26 @@ export async function createService(formData: FormData) {
   const supabase = await createClient()
   
   const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || title
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
   
   const { error } = await supabase.from('services').insert({
     title,
+    title_en,
     slug,
+    slug_en,
     short_desc: formData.get('short_desc') as string,
+    short_desc_en: formData.get('short_desc_en') as string || formData.get('short_desc') as string,
     content: formData.get('content') as string,
+    content_en: formData.get('content_en') as string || formData.get('content') as string,
     icon: formData.get('icon') as string || 'Activity',
   })
 
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/services')
   revalidatePath('/uzmanliklar')
+  revalidatePath('/en/uzmanliklar')
 }
 
 export async function deleteService(id: string) {
@@ -69,6 +83,7 @@ export async function updateAbout(formData: FormData) {
     .from('settings')
     .update({ 
       content: formData.get('content') as string,
+      content_en: formData.get('content_en') as string || formData.get('content') as string,
       updated_at: new Date().toISOString()
     })
     .eq('id', 'about_me')
@@ -76,6 +91,7 @@ export async function updateAbout(formData: FormData) {
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/about')
   revalidatePath('/hakkimda')
+  revalidatePath('/en/hakkimda')
 }
 
 // --- VIDEO ACTIONS ---
@@ -96,6 +112,7 @@ export async function createVideo(formData: FormData) {
 
   const { error } = await supabase.from('videos').insert({
     title: formData.get('title') as string,
+    title_en: formData.get('title_en') as string || formData.get('title') as string,
     youtube_url: youtube_url,
     is_pinned: formData.get('is_pinned') === 'on',
   })
@@ -103,7 +120,9 @@ export async function createVideo(formData: FormData) {
   if (error) throw new Error(error.message)
   revalidatePath('/admin/dashboard/videos')
   revalidatePath('/videolar')
+  revalidatePath('/en/videolar')
   revalidatePath('/')
+  revalidatePath('/en')
 }
 
 export async function deleteVideo(id: string) {
@@ -151,9 +170,11 @@ export async function createGalleryItem(formData: FormData) {
     // 3. Veritabanına kaydet
     const { error } = await supabase.from('gallery').insert({
       title,
+      title_en: formData.get('title_en') as string || title,
       image_url: publicUrl,
       category,
       album_name,
+      album_name_en: formData.get('album_name_en') as string || album_name,
       is_pinned: formData.get('is_pinned') === 'on',
     })
 
@@ -162,7 +183,9 @@ export async function createGalleryItem(formData: FormData) {
 
   revalidatePath('/admin/dashboard/gallery')
   revalidatePath('/galeri')
+  revalidatePath('/en/galeri')
   revalidatePath('/')
+  revalidatePath('/en')
 }
 
 export async function deleteGalleryItem(id: string) {

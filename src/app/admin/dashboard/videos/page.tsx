@@ -26,8 +26,13 @@ export default async function VideosAdminPage() {
           <form action={createVideo} className="space-y-4">
             
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Video Başlığı</label>
+              <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-1">Video Başlığı (TR)</label>
               <input type="text" id="title" name="title" required placeholder="Örn: Habertürk TV - Diz Protezi Hakkında" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
+            </div>
+
+            <div>
+              <label htmlFor="title_en" className="block text-sm font-medium text-slate-700 mb-1">Video Başlığı (EN)</label>
+              <input type="text" id="title_en" name="title_en" placeholder="Opsiyonel: Habertürk TV - About Knee Replacement" className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-secondary focus:border-secondary outline-none" />
             </div>
             
             <div>

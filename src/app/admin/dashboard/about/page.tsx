@@ -31,7 +31,7 @@ export default async function AboutAdminPage() {
         <form action={updateAbout} className="space-y-6">
           <div>
             <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-2">
-              Detaylı Biyografi (HTML etiketleri kullanabilirsiniz: &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt; vb.)
+              Detaylı Biyografi (TR - HTML etiketleri kullanabilirsiniz: &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt; vb.)
             </label>
             <textarea 
               id="content" 
@@ -39,6 +39,20 @@ export default async function AboutAdminPage() {
               rows={15} 
               required 
               defaultValue={setting?.content || ''}
+              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-secondary focus:border-secondary outline-none resize-y font-mono text-sm"
+            ></textarea>
+          </div>
+
+          <div>
+            <label htmlFor="content_en" className="block text-sm font-medium text-slate-700 mb-2 mt-4">
+              Detaylı Biyografi (EN - İngilizce)
+            </label>
+            <textarea 
+              id="content_en" 
+              name="content_en" 
+              rows={15} 
+              placeholder="Opsiyonel: İngilizce Biyografi (HTML destekler)"
+              defaultValue={setting?.content_en || ''}
               className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-secondary focus:border-secondary outline-none resize-y font-mono text-sm"
             ></textarea>
             <p className="mt-2 text-xs text-slate-500">
