@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Calendar } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Menu, X, Phone, Calendar, Search } from "lucide-react";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/arama?q=${encodeURIComponent(searchQuery)}`);
+      setMobileMenuOpen(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,13 +72,18 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="tel:+905555555555"
-              className="flex items-center text-primary hover:text-secondary transition-colors"
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              <span className="font-medium text-sm">0555 555 55 55</span>
-            </a>
+            <form onSubmit={handleSearch} className="relative hidden lg:block">
+              <input 
+                type="text" 
+                placeholder="Sitede Ara..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-4 pr-10 py-2.5 rounded-full border border-slate-200 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary text-sm w-48 transition-all focus:w-64 bg-slate-50/50"
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-secondary transition-colors">
+                <Search className="w-4 h-4" />
+              </button>
+            </form>
             <a
               href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
               target="_blank"
@@ -104,6 +120,18 @@ export function Header() {
             </Link>
           ))}
           <div className="pt-4 flex flex-col space-y-3">
+            <form onSubmit={handleSearch} className="relative w-full mb-2">
+              <input 
+                type="text" 
+                placeholder="Sitede Ara..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-4 pr-10 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary text-sm bg-slate-50"
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-secondary transition-colors">
+                <Search className="w-5 h-5" />
+              </button>
+            </form>
             <a
               href="tel:+905555555555"
               className="flex items-center justify-center text-primary font-medium py-2 bg-accent rounded-lg"

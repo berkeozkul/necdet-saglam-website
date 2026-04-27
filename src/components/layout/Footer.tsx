@@ -96,7 +96,7 @@ export function Footer() {
               <li className="flex items-start text-sm text-primary-foreground/70">
                 <MapPin className="w-5 h-5 mr-3 text-secondary shrink-0 mt-0.5" />
                 <span>
-                  Acıbadem KartalHastanesi<br />
+                  Acıbadem Kartal Hastanesi<br />
                   Ortopedi ve Travmatoloji Kliniği<br />
                   İstanbul, Türkiye
                 </span>
