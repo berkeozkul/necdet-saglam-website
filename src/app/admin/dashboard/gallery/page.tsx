@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { createGalleryItem, deleteGalleryItem, deleteAlbum, toggleAlbumPin } from '../actions'
 import Link from 'next/link'
+import { DeleteForm } from '@/components/admin/DeleteForm'
 
 export default async function GalleryAdminPage() {
   const supabase = await createClient()
@@ -125,14 +126,14 @@ export default async function GalleryAdminPage() {
                               {items[0].is_pinned ? "Tutturmayı Kaldır" : "Başa Tuttur"}
                             </button>
                           </form>
-                          <form action={async () => {
+                          <DeleteForm action={async () => {
                             'use server'
                             await deleteAlbum(albumName)
-                          }}>
+                          }} message="Bu albümü ve içindeki tüm fotoğrafları silmek istediğinize emin misiniz?">
                             <button type="submit" className="text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-red-100">
                               Tüm Albümü Sil
                             </button>
-                          </form>
+                          </DeleteForm>
                         </div>
                       </div>
 
@@ -146,7 +147,7 @@ export default async function GalleryAdminPage() {
                             <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 text-center">
                               <p className="text-white text-xs font-medium line-clamp-2 mb-2">{item.title}</p>
                               
-                              <form action={async () => {
+                              <DeleteForm action={async () => {
                                 'use server'
                                 await deleteGalleryItem(item.id)
                               }}>
@@ -154,7 +155,7 @@ export default async function GalleryAdminPage() {
                                   <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                   Sil
                                 </button>
-                              </form>
+                              </DeleteForm>
                             </div>
                           </div>
                         ))}
