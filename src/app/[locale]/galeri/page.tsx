@@ -77,15 +77,15 @@ export default async function GalleryPage() {
                     </span>
                   </div>
 
-                  <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {items.map((item) => {
                       const itemTitle = locale === 'tr' ? item.title : item.title_en || item.title;
                       return (
-                        <div key={item.id} className="break-inside-avoid relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-slate-100">
+                        <div key={item.id} className="relative group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-slate-100 aspect-square">
                           <img 
                             src={item.image_url} 
                             alt={itemTitle} 
-                            className="w-full h-auto object-cover"
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
                           
