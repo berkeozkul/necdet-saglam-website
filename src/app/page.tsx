@@ -14,7 +14,6 @@ export default function Home() {
     "omurga-cerrahisi",
     "diz-ve-kalca-protezi",
     "spor-yaralanmalari",
-    "travma-cerrahisi",
     "omuz-ve-dirsek",
     "ayak-ve-ayak-bilegi",
     "pediatrik-ortopedi"
