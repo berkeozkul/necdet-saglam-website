@@ -70,7 +70,7 @@ export default async function AboutPage() {
                     <Briefcase className="w-5 h-5 text-secondary mr-3 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium text-primary">{locale === 'tr' ? 'Mevcut Kurum' : 'Current Institution'}</p>
-                      <p className="text-sm text-foreground/70">{locale === 'tr' ? 'Acıbadem Hastanesi' : 'Acıbadem Hospital'}</p>
+                      <p className="text-sm text-foreground/70">{locale === 'tr' ? 'Acıbadem Kartal Hastanesi' : 'Acıbadem Kartal Hospital'}</p>
                     </div>
                   </li>
                   <li className="flex items-start">
