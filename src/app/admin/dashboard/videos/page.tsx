@@ -105,6 +105,7 @@ export default async function VideosAdminPage() {
                             </button>
                           </form>
                         </div>
+                      </div>
                     </div>
                   ))}
                 </div>
