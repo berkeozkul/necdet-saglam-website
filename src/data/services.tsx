@@ -130,6 +130,95 @@ export const services = [
 
       <p>Kliniğimizde ayak ve ayak bileği sorunlarına yönelik detaylı biyomekanik değerlendirmeler yapılarak, hastaya en uygun kişiselleştirilmiş tedavi planı (cerrahi veya cerrahi dışı) oluşturulmaktadır.</p>
     `,
+  },
+  {
+    id: "omurga-cerrahisi",
+    title: "Omurga Cerrahisi",
+    shortDesc: "Bel ve boyun fıtıkları, skolyoz, kifoz ve omurga kırıklarının modern yöntemlerle tedavisi.",
+    icon: "Bone",
+    content: `
+      <p>Omurga cerrahisi, bel ve boyun fıtıkları, omurga eğrilikleri (skolyoz ve kifoz), omurga kanal darlığı (spinal stenoz) ve omurga kırıklarının teşhis ve tedavisini kapsayan özel bir alandır.</p>
+      
+      <h3>Sık Karşılaşılan Omurga Sorunları</h3>
+      <ul>
+        <li><strong>Skolyoz ve Kifoz:</strong> Özellikle büyüme çağındaki çocuklarda görülen omurga eğrilikleri ve kamburluk.</li>
+        <li><strong>Bel ve Boyun Fıtıkları:</strong> Omurları yastıklayan disklerin taşarak sinirlere baskı yapması.</li>
+        <li><strong>Spinal Stenoz (Kanal Darlığı):</strong> Omurilik kanalının daralarak sinirleri sıkıştırması, yürüme zorluğu yapması.</li>
+        <li><strong>Omurga Kırıkları:</strong> Travma veya osteoporoz (kemik erimesi) kaynaklı kırıklar.</li>
+      </ul>
+      
+      <p>Kliniğimizde modern görüntüleme sistemleri ve nöromonitörizasyon eşliğinde en güvenli omurga cerrahisi uygulamaları gerçekleştirilmektedir.</p>
+    `,
+  },
+  {
+    id: "tumor-cerrahisi",
+    title: "Tümör Cerrahisi",
+    shortDesc: "İyi ve kötü huylu kemik ve yumuşak doku tümörlerinin teşhis ve cerrahi tedavisi.",
+    icon: "Activity",
+    content: `
+      <p>Ortopedik onkoloji (Tümör Cerrahisi), kemiklerde, eklemlerde ve yumuşak dokularda (kas, yağ, bağ dokusu) oluşan iyi veya kötü huylu kitlelerin tedavisini kapsar.</p>
+      
+      <h3>Tümör Cerrahisi Yaklaşımı</h3>
+      <p>Kemik ve yumuşak doku tümörlerinin tedavisi ekip işidir. Onkoloji, radyoloji ve patoloji uzmanlarıyla kurulan konseylerde her hastanın durumu detaylıca değerlendirilir. Amacımız; hastalıklı dokuyu tamamen temizlerken, uzvun (kol veya bacak) fonksiyonlarını maksimum düzeyde korumaktır.</p>
+      
+      <p>İleri evre vakalarda veya büyük kemik kayıplarında, kişiye özel üretilen <strong>tümör protezleri</strong> veya kemik nakilleri (greft) kullanılarak uzuv kurtarıcı cerrahiler başarıyla uygulanmaktadır.</p>
+    `,
+  },
+  {
+    id: "kemik-ve-eklem-enfeksiyonlari",
+    title: "Kemik ve Eklem Enfeksiyonları",
+    shortDesc: "Kemik iltihabı (osteomiyelit) ve protez enfeksiyonlarının çok disiplinli tedavisi.",
+    icon: "ShieldPlus",
+    content: `
+      <p>Kemik (osteomiyelit) ve eklem (septik artrit) enfeksiyonları, tedavi edilmediğinde kalıcı hasarlara ve uzuv kayıplarına yol açabilen ciddi rahatsızlıklardır.</p>
+      
+      <h3>Enfeksiyon Tedavisinde Yaklaşımımız</h3>
+      <p>Bu rahatsızlıkların tedavisi, güçlü antibiyotik protokolleri ve ardışık cerrahi müdahaleler gerektirebilir. Enfeksiyon cerrahisinde ölü (nekrotik) dokular tamamen temizlenir ve enfeksiyonun türüne göre lokal antibiyotik salgılayan özel malzemeler (çimentolar) bölgeye yerleştirilir.</p>
+      
+      <p>Daha önceden uygulanmış ancak <strong>enfekte olmuş protezlerin</strong> revizyon cerrahisi de (eski protezin çıkarılıp enfeksiyon temizlendikten sonra yeni protezin takılması) özel uzmanlık gerektiren ve kliniğimizde başarıyla uygulanan bir tedavi yöntemidir.</p>
+    `,
+  },
+  {
+    id: "pediatrik-ortopedi",
+    title: "Pediatrik Ortopedi",
+    shortDesc: "Çocukluk çağı kırıkları, doğuştan kalça çıkığı ve çarpık ayak (PEV) tedavisi.",
+    icon: "UserPlus",
+    content: `
+      <p>Pediatrik (çocuk) ortopedisi; bebeklikten ergenlik döneminin sonuna kadar kas-iskelet sisteminde görülen hastalıkların tanı ve tedavisiyle ilgilenir. Çocukların kemikleri sürekli büyüme ve gelişim halinde olduğu için yetişkinlerden çok farklı bir tedavi yaklaşımı gerektirir.</p>
+      
+      <h3>Başlıca Tedavi Alanlarımız</h3>
+      <ul>
+        <li><strong>Gelişimsel Kalça Displazisi (Doğuştan Kalça Çıkığı):</strong> Erken teşhisle ameliyatsız tedavi edilebilir.</li>
+        <li><strong>Pes Ekinovarus (Çarpık Ayak):</strong> Özel alçılama teknikleri (Ponseti yöntemi) ile düzeltilmesi.</li>
+        <li><strong>Çocukluk Çağı Kırıkları:</strong> Büyüme kıkırdaklarına zarar vermeden tedavi planlanması.</li>
+        <li><strong>Serebral Palsi (CP):</strong> Kasılmaları azaltıcı cerrahi müdahaleler ve botoks uygulamaları.</li>
+      </ul>
+    `,
+  },
+  {
+    id: "deformite-cerrahisi",
+    title: "Deformite Cerrahisi",
+    shortDesc: "Doğuştan veya sonradan oluşan kemik eğriliklerinin düzeltilmesi ve ilizarov cerrahisi.",
+    icon: "Activity",
+    content: `
+      <p>Deformite, kemik veya eklemlerdeki anormal şekil bozukluklarıdır. Doğuştan gelen genetik hastalıklar, eski kırıkların yanlış kaynaması veya kemik enfeksiyonları sonucu oluşabilir.</p>
+      
+      <h3>İlizarov ve Eksternal Fiksatörler</h3>
+      <p>Özellikle ciddi eğriliklerin ve kemik kayıplarının tedavisinde "İlizarov" yöntemi (dışarıdan takılan çember şeklindeki cihazlar) veya bilgisayar destekli modern eksternal fiksatörler kullanılmaktadır. Bu sayede eğri kemikler kırılarak gün gün, milimetrik olarak düzeltilmekte ve doğru pozisyonda kaynaması sağlanmaktadır.</p>
+    `,
+  },
+  {
+    id: "kemik-ve-boy-uzatma-cerrahisi",
+    title: "Kemik ve Boy Uzatma Cerrahisi",
+    shortDesc: "Kemik kısalıkları ve eşitsizliklerinin modern yöntemlerle (manyetik çivi vb.) uzatılması.",
+    icon: "HeartPulse",
+    content: `
+      <p>İki bacak arasındaki boy eşitsizliği (kısalık) durumları, hem kozmetik problemlere hem de ilerleyen yıllarda omurga eğriliklerine ve eklem kireçlenmelerine yol açar. Kemik uzatma cerrahisi ile bu fark tamamen ortadan kaldırılabilmektedir.</p>
+      
+      <h3>Modern Uzatma Yöntemleri</h3>
+      <p>Eskiden sadece dışarıdan takılan demir cihazlarla yapılan uzatma işlemleri, günümüzde teknolojinin gelişmesiyle <strong>manyetik uzayabilen kemik içi çiviler</strong> ile dışarıdan hiçbir cihaz görünmeden, ağrısız ve çok daha konforlu bir şekilde yapılabilmektedir.</p>
+      <p>Kliniğimizde hem tıbbi gereklilik (eşitsizlik) durumlarında hem de uygun vakalarda boy uzatma operasyonları başarıyla uygulanmaktadır.</p>
+    `,
   }
 ];
 

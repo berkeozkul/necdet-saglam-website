@@ -55,9 +55,6 @@ export default function ContactPage() {
                   </div>
                   <h3 className="font-bold text-primary text-lg mb-2">Telefon</h3>
                   <p className="text-foreground/70 mb-2">Randevu ve Bilgi için:</p>
-                  <a href="tel:+905555555555" className="text-secondary font-bold hover:text-primary transition-colors text-lg">
-                    0555 555 55 55
-                  </a>
                 </div>
 
                 {/* Email Card */}
@@ -99,7 +96,7 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center bg-secondary hover:bg-white hover:text-primary text-white px-6 py-3 rounded-full font-bold transition-all w-full sm:w-auto text-center"
                 >
-                  Acıbadem'den Randevu Al
+                  Randevu Al
                 </a>
               </div>
             </div>

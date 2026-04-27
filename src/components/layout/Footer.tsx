@@ -66,12 +66,18 @@ export function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                "Diz Protezi",
-                "Kalça Protezi",
-                "Artroskopik Cerrahi",
+                "Diz ve Kalça Protezi",
                 "Spor Yaralanmaları",
+                "Artroskopik Cerrahi",
                 "Travma Cerrahisi",
                 "Omuz ve Dirsek Cerrahisi",
+                "Ayak ve Ayak Bileği Cerrahisi",
+                "Omurga Cerrahisi",
+                "Tümör Cerrahisi",
+                "Kemik ve Eklem Enfeksiyonları",
+                "Pediatrik Ortopedi",
+                "Deformite Cerrahisi",
+                "Kemik ve Boy Uzatma Cerrahisi",
               ].map((service) => (
                 <li key={service} className="text-primary-foreground/70 text-sm">
                   {service}
@@ -90,33 +96,19 @@ export function Footer() {
               <li className="flex items-start text-sm text-primary-foreground/70">
                 <MapPin className="w-5 h-5 mr-3 text-secondary shrink-0 mt-0.5" />
                 <span>
-                  Acıbadem Hastanesi<br />
+                  Acıbadem KartalHastanesi<br />
                   Ortopedi ve Travmatoloji Kliniği<br />
                   İstanbul, Türkiye
                 </span>
               </li>
               <li className="flex items-center text-sm text-primary-foreground/70">
-                <Phone className="w-5 h-5 mr-3 text-secondary shrink-0" />
-                <a href="tel:+905555555555" className="hover:text-white transition-colors">
-                  0555 555 55 55
-                </a>
-              </li>
-              <li className="flex items-center text-sm text-primary-foreground/70">
                 <Mail className="w-5 h-5 mr-3 text-secondary shrink-0" />
-                <a href="mailto:info@necdetsaglam.com" className="hover:text-white transition-colors">
+                <a href="necdet.saglam@acıbadem.com" className="hover:text-white transition-colors">
                   info@necdetsaglam.com
                 </a>
               </li>
             </ul>
             <div className="mt-6">
-              <a
-                href="https://www.acibadem.com.tr/doktor/necdet-saglam/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full bg-white text-primary hover:bg-secondary hover:text-white px-5 py-3 rounded-lg font-medium transition-all shadow-md"
-              >
-                Randevu Al
-              </a>
             </div>
           </div>
         </div>
