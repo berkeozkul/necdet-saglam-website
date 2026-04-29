@@ -92,6 +92,14 @@ export default async function VideosAdminPage() {
                         </div>
                         
                         <div className="flex gap-2">
+                          <Link 
+                            href={`/admin/dashboard/videos/${video.id}`} 
+                            className="flex-1 py-2 rounded-lg transition-colors text-xs font-bold flex items-center justify-center text-blue-500 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" 
+                            title="Düzenle"
+                          >
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                            Düzenle
+                          </Link>
                           <form action={async () => {
                             'use server'
                             await toggleVideoPin(video.id, video.is_pinned)

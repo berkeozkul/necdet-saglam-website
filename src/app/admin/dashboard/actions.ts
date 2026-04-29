@@ -39,6 +39,44 @@ export async function createPost(formData: FormData) {
   revalidatePath('/en/makaleler')
 }
 
+export async function updatePost(formData: FormData) {
+  const supabase = await createClient()
+  
+  const id = formData.get('id') as string
+  const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  
+  const excerpt = formData.get('excerpt') as string
+  const excerpt_en = formData.get('excerpt_en') as string || await autoTranslate(excerpt)
+
+  const content = formData.get('content') as string
+  const content_en = formData.get('content_en') as string || await autoTranslate(content)
+
+  const { error } = await supabase.from('posts').update({
+    title,
+    title_en,
+    slug,
+    slug_en,
+    excerpt,
+    excerpt_en,
+    content,
+    content_en,
+    image_url: formData.get('image_url') as string,
+    is_published: formData.get('is_published') === 'on',
+    is_pinned: formData.get('is_pinned') === 'on',
+  }).eq('id', id)
+
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/blog')
+  revalidatePath('/makaleler')
+  revalidatePath('/en/makaleler')
+  
+  const { redirect } = await import('next/navigation')
+  redirect('/admin/dashboard/blog')
+}
+
 export async function deletePost(id: string) {
   const supabase = await createClient()
   const { error } = await supabase.from('posts').delete().eq('id', id)
@@ -78,6 +116,42 @@ export async function createService(formData: FormData) {
   revalidatePath('/admin/dashboard/services')
   revalidatePath('/uzmanliklar')
   revalidatePath('/en/uzmanliklar')
+}
+
+export async function updateService(formData: FormData) {
+  const supabase = await createClient()
+  
+  const id = formData.get('id') as string
+  const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  const slug_en = title_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+  
+  const short_desc = formData.get('short_desc') as string
+  const short_desc_en = formData.get('short_desc_en') as string || await autoTranslate(short_desc)
+
+  const content = formData.get('content') as string
+  const content_en = formData.get('content_en') as string || await autoTranslate(content)
+
+  const { error } = await supabase.from('services').update({
+    title,
+    title_en,
+    slug,
+    slug_en,
+    short_desc,
+    short_desc_en,
+    content,
+    content_en,
+    icon: formData.get('icon') as string || 'Activity',
+  }).eq('id', id)
+
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/services')
+  revalidatePath('/uzmanliklar')
+  revalidatePath('/en/uzmanliklar')
+  
+  const { redirect } = await import('next/navigation')
+  redirect('/admin/dashboard/services')
 }
 
 export async function deleteService(id: string) {
@@ -142,6 +216,42 @@ export async function createVideo(formData: FormData) {
   revalidatePath('/en/videolar')
   revalidatePath('/')
   revalidatePath('/en')
+}
+
+export async function updateVideo(formData: FormData) {
+  const supabase = await createClient()
+  
+  const id = formData.get('id') as string
+  let youtube_url = formData.get('youtube_url') as string
+  
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = youtube_url.match(regExp);
+
+  if (match && match[2].length === 11) {
+    youtube_url = match[2];
+  } else {
+    throw new Error("Lütfen geçerli bir YouTube linki girin.");
+  }
+
+  const title = formData.get('title') as string
+  const title_en = formData.get('title_en') as string || await autoTranslate(title)
+
+  const { error } = await supabase.from('videos').update({
+    title,
+    title_en,
+    youtube_url: youtube_url,
+    is_pinned: formData.get('is_pinned') === 'on',
+  }).eq('id', id)
+
+  if (error) throw new Error(error.message)
+  revalidatePath('/admin/dashboard/videos')
+  revalidatePath('/videolar')
+  revalidatePath('/en/videolar')
+  revalidatePath('/')
+  revalidatePath('/en')
+  
+  const { redirect } = await import('next/navigation')
+  redirect('/admin/dashboard/videos')
 }
 
 export async function deleteVideo(id: string) {
