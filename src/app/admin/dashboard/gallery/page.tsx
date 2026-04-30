@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { createGalleryItem, deleteGalleryItem, deleteAlbum, toggleAlbumPin } from '../actions'
 import Link from 'next/link'
 import { DeleteForm } from '@/components/admin/DeleteForm'
+import { SubmitButton } from '@/components/admin/SubmitButton'
 
 export default async function GalleryAdminPage() {
   const supabase = await createClient()
@@ -87,9 +88,9 @@ export default async function GalleryAdminPage() {
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors mt-4">
+            <SubmitButton loadingText="Fotoğraf Yükleniyor...">
               Fotoğrafı Yükle
-            </button>
+            </SubmitButton>
           </form>
         </div>
 

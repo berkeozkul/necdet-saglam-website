@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { updateVideo } from '../../actions'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { SubmitButton } from '@/components/admin/SubmitButton'
 
 export default async function EditVideoPage({ params }: { params: { id: string } }) {
   const supabase = await createClient()
@@ -58,9 +59,12 @@ export default async function EditVideoPage({ params }: { params: { id: string }
           </div>
 
           <div className="pt-4 border-t border-slate-100">
-            <button type="submit" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg">
+            <SubmitButton 
+              loadingText="Kaydediliyor..." 
+              className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg"
+            >
               Değişiklikleri Kaydet
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </div>

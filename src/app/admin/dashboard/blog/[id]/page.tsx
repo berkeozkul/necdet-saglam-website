@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { updatePost } from '../../actions'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { SubmitButton } from '@/components/admin/SubmitButton'
 
 export default async function EditPostPage({ params }: { params: { id: string } }) {
   const supabase = await createClient()
@@ -84,10 +85,13 @@ export default async function EditPostPage({ params }: { params: { id: string } 
             </div>
           </div>
 
-          <div className="pt-4">
-            <button type="submit" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg">
+          <div className="pt-4 border-t border-slate-100">
+            <SubmitButton 
+              loadingText="Değişiklikler Kaydediliyor..." 
+              className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg"
+            >
               Değişiklikleri Kaydet
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </div>

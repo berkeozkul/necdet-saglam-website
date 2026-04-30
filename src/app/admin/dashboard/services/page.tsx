@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { createService, deleteService } from '../actions'
 import Link from 'next/link'
 import { DeleteForm } from '@/components/admin/DeleteForm'
+import { SubmitButton } from '@/components/admin/SubmitButton'
 
 export default async function ServicesAdminPage() {
   const supabase = await createClient()
@@ -67,9 +68,9 @@ export default async function ServicesAdminPage() {
               </select>
             </div>
 
-            <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+            <SubmitButton loadingText="Kaydediliyor...">
               Uzmanlığı Kaydet
-            </button>
+            </SubmitButton>
           </form>
         </div>
 
